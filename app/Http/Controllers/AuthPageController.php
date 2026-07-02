@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Support\Seo\SeoData;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
 
 class AuthPageController extends Controller
 {

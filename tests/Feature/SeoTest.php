@@ -3,6 +3,8 @@
 use App\Support\Seo\SeoData;
 
 it('renders the home page and sitemap', function (): void {
+    $this->withoutVite();
+
     $this->get('/')->assertOk();
     $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml');
 });
