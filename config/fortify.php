@@ -13,5 +13,5 @@ return [
     'middleware' => ['web'],
     'views' => false,
     'limiters' => ['login' => 'login', 'two-factor' => 'two-factor'],
-    'features' => [Features::registration(), Features::resetPasswords(), Features::emailVerification()],
+    'features' => [Features::registration(), Features::resetPasswords()],
 ];

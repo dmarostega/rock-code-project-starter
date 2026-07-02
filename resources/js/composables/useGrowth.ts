@@ -6,6 +6,7 @@ interface GrowthPayload {
 }
 
 const storageKey = 'rockcode_anonymous_id';
+const growthEnabled = import.meta.env.VITE_GROWTH_ENABLED === 'true';
 
 function anonymousId(): string {
   let id = localStorage.getItem(storageKey);
@@ -18,13 +19,21 @@ function anonymousId(): string {
 
 export function useGrowth() {
   const track = async ({ name, metadata = {} }: GrowthPayload): Promise<void> => {
-    await axios.post('/growth/events', {
-      name,
-      metadata,
-      anonymous_id: anonymousId(),
-      path: window.location.pathname,
-      referrer: document.referrer || null,
-    });
+    if (!growthEnabled) {
+      return;
+    }
+
+    try {
+      await axios.post('/growth/events', {
+        name,
+        metadata,
+        anonymous_id: anonymousId(),
+        path: window.location.pathname,
+        referrer: document.referrer || null,
+      });
+    } catch {
+      // Tracking must never block the user flow.
+    }
   };
 
   return { track };

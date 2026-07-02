@@ -25,5 +25,27 @@ it('captures campaign attribution without storing a raw ip', function (): void {
 });
 
 it('rejects invalid event names', function (): void {
+    config(['growth.enabled' => true]);
+
     $this->postJson('/growth/events', ['name' => 'Invalid Event'])->assertUnprocessable();
+});
+
+it('keeps growth disabled until a product explicitly enables it', function (): void {
+    config(['growth.enabled' => false]);
+
+    $this->postJson('/growth/events', ['name' => 'cta.clicked'])->assertForbidden();
+});
+
+it('rejects unsafe growth metadata', function (): void {
+    config(['growth.enabled' => true]);
+
+    $this->postJson('/growth/events', [
+        'name' => 'cta.clicked',
+        'metadata' => ['email' => 'customer@example.com'],
+    ])->assertUnprocessable();
+
+    $this->postJson('/growth/events', [
+        'name' => 'cta.clicked',
+        'metadata' => ['placement' => ['nested' => true]],
+    ])->assertUnprocessable();
 });

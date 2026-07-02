@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\SafeGrowthMetadata;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreGrowthEventRequest extends FormRequest
@@ -19,8 +20,7 @@ class StoreGrowthEventRequest extends FormRequest
             'anonymous_id' => ['nullable', 'uuid'],
             'path' => ['nullable', 'string', 'max:2048'],
             'referrer' => ['nullable', 'url', 'max:2048'],
-            'metadata' => ['nullable', 'array', 'max:'.config('growth.metadata_limit')],
-            'metadata.*' => ['nullable'],
+            'metadata' => ['nullable', 'array', 'max:'.config('growth.metadata_limit'), new SafeGrowthMetadata],
         ];
     }
 }
