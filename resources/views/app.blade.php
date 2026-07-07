@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#0f172a">
     <title inertia>{{ config('app.name') }}</title>
+    @include('partials.google-analytics')
     @vite(['resources/css/app.css', 'resources/js/app.ts'])
     @inertiaHead
 </head>

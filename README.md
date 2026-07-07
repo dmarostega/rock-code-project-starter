@@ -15,6 +15,7 @@ Base opinativa para novos produtos web da Rock Code. Combina a organizacao amadu
 - Autenticacao minima com login, cadastro e recuperacao via Fortify.
 - SEO por pagina, canonical, Open Graph, Twitter Card, sitemap e robots.
 - Tracking first-party de eventos e atribuicao UTM, desligado por padrao ate o produto definir finalidade, taxonomia e consentimento.
+- GA4/GTag opcional via `GA_ENABLED=false` e `GA_MEASUREMENT_ID=`, com guards de producao, debug e host local.
 - Upload de imagens/PDF, WebP, limite de dimensao, Storage e Policy.
 - SQLite local por padrao, filas e cache em banco, endpoint `/up` e CI.
 - Documentacao de arquitetura, adocao e testes manuais.
