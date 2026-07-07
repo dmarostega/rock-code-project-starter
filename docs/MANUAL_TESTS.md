@@ -10,4 +10,6 @@ Apos instalar as dependencias:
 6. Crie uma conta, entre no dashboard e envie JPG, PNG, WebP e PDF validos.
 7. Confirme que imagens grandes viram WebP com largura maxima configurada e que arquivo invalido e recusado.
 8. Confirme que um usuario nao consegue excluir arquivo pertencente a outro usuario.
-9. Execute `composer ci:check`.
+9. Com o `.env.example` padrao, abra a home em `http://localhost` e confirme no Network que nao ha requests para `googletagmanager.com` nem `analytics.google.com/g/collect`.
+10. Em ambiente de producao controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`; confirme que a tag GA4 aparece apenas em host publico.
+11. Execute `composer ci:check`.
