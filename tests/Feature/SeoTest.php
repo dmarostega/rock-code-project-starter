@@ -9,6 +9,37 @@ it('renders the home page and sitemap', function (): void {
     $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml');
 });
 
+it('keeps private pages out of the sitemap', function (): void {
+    config(['app_settings.seo.sitemap_paths' => ['/', '/sobre']]);
+
+    $this->get('/sitemap.xml')
+        ->assertOk()
+        ->assertSee(url('/'), false)
+        ->assertSee(url('/sobre'), false)
+        ->assertDontSee('/login', false)
+        ->assertDontSee('/register', false)
+        ->assertDontSee('/dashboard', false)
+        ->assertDontSee('/admin', false)
+        ->assertDontSee('/profile', false)
+        ->assertDontSee('/settings', false);
+});
+
+it('renders robots disallow rules for sensitive areas', function (): void {
+    $this->get('/robots.txt')
+        ->assertOk()
+        ->assertHeader('Content-Type', 'text/plain; charset=utf-8')
+        ->assertSee('User-agent: *', false)
+        ->assertSee('Disallow: /login', false)
+        ->assertSee('Disallow: /register', false)
+        ->assertSee('Disallow: /forgot-password', false)
+        ->assertSee('Disallow: /reset-password', false)
+        ->assertSee('Disallow: /dashboard', false)
+        ->assertSee('Disallow: /admin', false)
+        ->assertSee('Disallow: /profile', false)
+        ->assertSee('Disallow: /settings', false)
+        ->assertSee('Sitemap: '.url('/sitemap.xml'), false);
+});
+
 it('normalizes page metadata', function (): void {
     config(['app_settings.seo.title_suffix' => ' | Teste']);
 

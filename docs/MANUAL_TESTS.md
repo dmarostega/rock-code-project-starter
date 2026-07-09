@@ -67,10 +67,12 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 1. Abra a home e inspecione o HTML renderizado.
 2. Confirme `title`, `description`, `canonical`, Open Graph e Twitter Card.
-3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis aparecem.
-4. Acesse `/robots.txt` e confirme que o produto derivado revisou padrões de auth, dashboard, admin, profile, settings e reset password antes de publicar.
-5. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS` foram revisados no `.env` do produto.
-6. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica e absoluta ou resolvivel pela aplicacao.
+3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis de `APP_SEO_SITEMAP_PATHS` aparecem.
+4. Confirme que `/login`, `/register`, `/forgot-password`, `/reset-password`, `/dashboard`, `/admin`, `/profile` e `/settings` nao aparecem no sitemap.
+5. Acesse `/robots.txt` e confirme bloqueios para auth, dashboard, admin, profile, settings e reset password.
+6. Ao adicionar uma nova pagina publica, inclua seu caminho em `APP_SEO_SITEMAP_PATHS`; nao adicione telas autenticadas, operacionais ou de reset de senha.
+7. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD`, `APP_SEO_ROBOTS`, `APP_SEO_SITEMAP_PATHS` e `APP_SEO_ROBOTS_DISALLOW` foram revisados no `.env` do produto.
+8. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica, absoluta e acessivel sem login.
 
 ## 5.1 Configuracoes gerais do aplicativo
 
