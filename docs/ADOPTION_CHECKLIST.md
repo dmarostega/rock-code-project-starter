@@ -2,8 +2,8 @@
 
 - [ ] Ler `docs/V01_SCOPE.md` e confirmar que o produto aceita a v0.1 como base experimental para MVP, sem assumir billing, planos, admin real, exportacoes ou operacao madura no core.
 - [ ] Alterar `APP_NAME` e `APP_PUBLIC_NAME`; use `APP_NAME` para identificacao interna Laravel e `APP_PUBLIC_NAME` para nome visivel do produto.
-- [ ] Configurar contato principal em `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL`.
-- [ ] Revisar `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS`.
+- [ ] Configurar contato principal publico em `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL`; nao use esse grupo para dados internos, pessoais ou operacionais sensiveis.
+- [ ] Revisar `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS`; produtos publicos devem definir `APP_SEO_DEFAULT_IMAGE`.
 - [ ] Revisar flags simples `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED`; elas sao fundacao de config, nao substituem Policies, middleware ou regras de negocio.
 - [ ] Alterar descricao, URLs e identidade visual.
 - [ ] Escolher MySQL/PostgreSQL/SQLite e configurar `.env`.

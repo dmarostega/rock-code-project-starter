@@ -70,11 +70,12 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis aparecem.
 4. Acesse `/robots.txt` e confirme que o produto derivado revisou padrões de auth, dashboard, admin, profile, settings e reset password antes de publicar.
 5. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS` foram revisados no `.env` do produto.
+6. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica e absoluta ou resolvivel pela aplicacao.
 
 ## 5.1 Configuracoes gerais do aplicativo
 
 1. Confirme que `APP_PUBLIC_NAME` aparece na navegacao publica e autenticada.
-2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado.
+2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado e contem apenas dados publicos.
 3. Confirme que `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED` refletem a decisao inicial do produto.
 4. Confirme que nenhuma tela administrativa complexa foi adicionada para essas configuracoes neste ciclo.
 
