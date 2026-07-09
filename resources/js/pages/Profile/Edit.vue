@@ -20,7 +20,7 @@ const form = useForm({
       <section>
         <h1 class="text-3xl font-bold">Meu perfil</h1>
         <p class="mt-2 text-slate-600 dark:text-slate-300">
-          Revise os dados basicos da conta e mantenha seu nome atualizado.
+          Revise os dados básicos da conta e mantenha seu nome atualizado.
         </p>
       </section>
 
@@ -62,7 +62,7 @@ const form = useForm({
           class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
         >
           <h2 class="font-semibold text-slate-950 dark:text-white">Senha</h2>
-          <p class="mt-1">A troca de senha usa o fluxo de redefinicao ja disponivel no starter.</p>
+          <p class="mt-1">A troca de senha usa o fluxo de redefinição já disponível no starter.</p>
         </div>
 
         <button
