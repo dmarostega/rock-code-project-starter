@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ThemeToggle from '@/components/ThemeToggle.vue';
 import type { PageProps } from '@/types';
 import { Link, router, usePage } from '@inertiajs/vue3';
 
@@ -7,18 +8,37 @@ const logout = (): void => router.post('/logout');
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-50 text-slate-900">
-    <header class="border-b border-slate-200 bg-white">
+  <div class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <header
+      class="border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
+    >
       <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div class="flex items-center gap-5">
-          <Link href="/" class="font-semibold">{{ page.props.appName }}</Link>
-          <Link href="/dashboard" class="text-sm font-medium text-blue-700">Dashboard</Link>
+          <Link href="/" class="font-semibold text-slate-950 dark:text-white">
+            {{ page.props.appName }}
+          </Link>
+          <Link
+            href="/dashboard"
+            class="text-sm font-medium text-blue-700 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-200"
+          >
+            Dashboard
+          </Link>
         </div>
         <div class="flex items-center gap-4 text-sm">
-          <span v-if="page.props.auth.user" class="hidden text-slate-600 sm:inline">
+          <ThemeToggle />
+          <span
+            v-if="page.props.auth.user"
+            class="hidden text-slate-600 sm:inline dark:text-slate-300"
+          >
             {{ page.props.auth.user.name }}
           </span>
-          <button type="button" class="font-medium text-slate-700" @click="logout">Sair</button>
+          <button
+            type="button"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+            @click="logout"
+          >
+            Sair
+          </button>
         </div>
       </nav>
     </header>

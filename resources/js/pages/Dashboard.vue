@@ -15,16 +15,21 @@ const uploaded = ref<MediaAsset[]>([]);
     <div class="grid gap-8 lg:grid-cols-2">
       <section>
         <h1 class="text-3xl font-bold">Dashboard</h1>
-        <p class="mt-2 text-slate-600">Substitua esta tela pelo primeiro fluxo real do produto.</p>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">
+          Substitua esta tela pelo primeiro fluxo real do produto.
+        </p>
       </section>
       <section>
         <h2 class="mb-3 text-lg font-semibold">Exemplo do módulo de mídia</h2>
         <MediaUploader @uploaded="uploaded.unshift($event)" />
         <ul class="mt-4 space-y-2 text-sm">
           <li v-for="asset in uploaded" :key="asset.id">
-            <a class="text-blue-700 underline" :href="asset.url" target="_blank">{{
-              asset.display_name
-            }}</a>
+            <a
+              class="text-blue-700 underline hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-200"
+              :href="asset.url"
+              target="_blank"
+              >{{ asset.display_name }}</a
+            >
           </li>
         </ul>
       </section>

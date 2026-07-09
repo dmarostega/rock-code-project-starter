@@ -26,6 +26,14 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 8. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
 9. Valide mensagens de erro para credenciais inválidas no login.
 
+## 2.1 Tema claro/escuro
+
+1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
+2. Repita sem preferencia salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
+3. Use o botao de tema na home e confirme alternancia entre light e dark.
+4. Recarregue a pagina e confirme que a escolha manual permanece salva no navegador.
+5. Acesse `/login`, `/register`, `/forgot-password`, `/reset-password` e `/dashboard`; confirme texto, campos, botoes e cards legiveis nos dois temas.
+
 ## 3. Reset de senha
 
 1. Confirme que `MAIL_MAILER=log` está configurado no ambiente local.

@@ -6,6 +6,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#0f172a">
     <title inertia>{{ config('app.name') }}</title>
+    <script>
+        (() => {
+            const storageKey = 'rock-code-theme';
+            const savedTheme = localStorage.getItem(storageKey);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme === 'light' || savedTheme === 'dark'
+                ? savedTheme
+                : prefersDark
+                    ? 'dark'
+                    : 'light';
+
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.documentElement.style.colorScheme = theme;
+        })();
+    </script>
     @include('partials.google-analytics')
     @vite(['resources/css/app.css', 'resources/js/app.ts'])
     @inertiaHead
