@@ -24,8 +24,12 @@ export interface PageProps {
 
 export interface MediaAsset {
   id: string;
-  original_name: string;
+  kind: 'image' | 'document';
   mime_type: string;
   size: number;
+  width: number | null;
+  height: number | null;
+  alt_text: string | null;
+  display_name: string;
   url: string;
 }

@@ -2,6 +2,12 @@
 
 Base opinativa para novos produtos web da Rock Code. Combina a organizacao amadurecida nos projetos SaaS com a stack moderna de Vue/Inertia adotada no projeto `loteries`, sem carregar dominio de propostas, ordens, loterias ou assinaturas.
 
+## Status da v0.1
+
+A v0.1 e uma base oficial experimental para MVPs Laravel + Vue/Inertia. Ela padroniza o ponto de partida tecnico, mas nao e um micro-SaaS premium completo.
+
+Antes de usar em um produto, leia `docs/V01_SCOPE.md` e execute `docs/ADOPTION_CHECKLIST.md`. Billing, planos, admin real, exportacoes, operacao madura e recursos premium devem ser planejados no produto derivado, fora do core da v0.1.
+
 ## Stack
 
 - PHP 8.3 e Laravel 13
@@ -41,4 +47,8 @@ composer test
 composer ci:check
 ```
 
-Leia primeiro `docs/ADOPTION_CHECKLIST.md` e remova tudo que o novo produto nao precisar.
+## Documentacao
+
+- Leia `docs/V01_SCOPE.md` para entender o escopo oficial, as limitacoes e o que fica fora do core da v0.1 experimental.
+- Leia `docs/ADOPTION_CHECKLIST.md` antes de iniciar um produto e remova tudo que o novo produto nao precisar.
+- Use `docs/DEPLOY.md` como roteiro minimo para deploy manual em VPS, CloudPanel ou ambiente equivalente.
