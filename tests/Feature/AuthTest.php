@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 it('logs in an existing user', function (): void {
@@ -66,4 +68,26 @@ it('blocks guests from the dashboard', function (): void {
 
 it('blocks guests from media routes', function (): void {
     $this->post('/media')->assertRedirect('/login');
+});
+
+it('shares an explicit auth user payload with inertia', function (): void {
+    $user = User::factory()->create([
+        'name' => 'Cliente Seguro',
+        'email' => 'seguro@example.com',
+        'email_verified_at' => now(),
+        'password' => Hash::make('password'),
+        'remember_token' => 'sensitive-token',
+    ]);
+
+    $request = Request::create('/dashboard');
+    $request->setUserResolver(fn (): User => $user);
+    $request->setLaravelSession(app('session')->driver());
+
+    $shared = (new HandleInertiaRequests)->share($request);
+
+    expect($shared['auth']['user'])->toBe([
+        'id' => $user->id,
+        'name' => 'Cliente Seguro',
+        'email' => 'seguro@example.com',
+    ]);
 });
