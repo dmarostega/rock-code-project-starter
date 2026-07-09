@@ -19,6 +19,41 @@ it('stores an allowed document for an authenticated user', function (): void {
     Storage::disk('public')->assertExists($asset->path);
 });
 
+it('blocks uploads with a disallowed mime type', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->from('/dashboard')->post('/media', [
+        'file' => UploadedFile::fake()->create('payload.txt', 10, 'text/plain'),
+    ])->assertRedirect('/dashboard')->assertSessionHasErrors('file');
+
+    expect(MediaAsset::query()->count())->toBe(0);
+});
+
+it('blocks uploads larger than the configured limit', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public', 'media.max_size_kb' => 100]);
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->from('/dashboard')->post('/media', [
+        'file' => UploadedFile::fake()->create('briefing.pdf', 101, 'application/pdf'),
+    ])->assertRedirect('/dashboard')->assertSessionHasErrors('file');
+
+    expect(MediaAsset::query()->count())->toBe(0);
+});
+
+it('blocks guests from uploading media', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+
+    $this->post('/media', [
+        'file' => UploadedFile::fake()->create('briefing.pdf', 100, 'application/pdf'),
+    ])->assertRedirect('/login');
+
+    expect(MediaAsset::query()->count())->toBe(0);
+});
+
 it('prevents another user from deleting an asset', function (): void {
     $owner = User::factory()->create();
     $asset = MediaAsset::create(['user_id' => $owner->id, 'disk' => 'public', 'path' => 'media/test.pdf', 'original_name' => 'test.pdf', 'mime_type' => 'application/pdf', 'size' => 10, 'kind' => 'document']);
