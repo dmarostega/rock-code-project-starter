@@ -4,7 +4,7 @@ Este guia cobre o deploy manual mínimo do starter em produção. Ele serve como
 
 ## 1. Pré-requisitos
 
-- PHP 8.3 ou superior, conforme a restrição `^8.3` do `composer.json`.
+- PHP 8.4 ou superior, conforme a restrição `^8.4` do `composer.json`.
 - Extensões PHP exigidas pelo Laravel e pelas dependências do projeto.
 - Composer instalado.
 - Node.js e npm instalados para gerar os assets.
@@ -88,7 +88,7 @@ APP_SEO_DEFAULT_IMAGE=https://seudominio.com/images/social-default.png
 APP_SEO_TWITTER_CARD=summary_large_image
 APP_SEO_ROBOTS=index,follow
 APP_SEO_SITEMAP_PATHS="/"
-APP_SEO_ROBOTS_DISALLOW="/login,/register,/forgot-password,/reset-password,/dashboard,/admin,/profile,/settings"
+APP_SEO_ROBOTS_DISALLOW=""
 APP_FLAG_PUBLIC_REGISTRATION=true
 APP_FLAG_MEDIA_UPLOADS=true
 
@@ -109,6 +109,7 @@ Obrigatório:
 - Não publique `.env` nem deixe o document root apontado para a raiz do projeto.
 - Revise `MEDIA_DISK`: arquivos sensíveis devem usar disco privado e entrega autorizada ou URL temporária.
 - Defina `APP_SEO_DEFAULT_IMAGE` com URL absoluta publica para compartilhamento social e inclua em `APP_SEO_SITEMAP_PATHS` somente paginas publicas indexaveis.
+- Mantenha `APP_SEO_ROBOTS_DISALLOW` vazio por padrao. Configure `Disallow` apenas quando a intencao for impedir crawling de rotas especificas; isso nao substitui `noindex` nem autenticacao.
 
 ## 4. Banco, cache e storage
 
@@ -149,7 +150,7 @@ server {
     location = /robots.txt  { access_log off; log_not_found off; }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
     }
@@ -166,7 +167,7 @@ No CloudPanel ou painel similar:
 
 1. Configure o site como PHP.
 2. Aponte o document root para `public`.
-3. Configure PHP 8.3 ou superior.
+3. Configure PHP 8.4 ou superior.
 4. Configure HTTPS.
 5. Confirme que `.env`, `storage`, `vendor` e arquivos de código não são acessíveis pelo navegador.
 

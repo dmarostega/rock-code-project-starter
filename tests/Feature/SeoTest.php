@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use App\Support\Seo\SeoData;
+use Inertia\Testing\AssertableInertia as Assert;
 
 it('renders the home page and sitemap', function (): void {
     $this->withoutVite();
@@ -24,19 +26,22 @@ it('keeps private pages out of the sitemap', function (): void {
         ->assertDontSee('/settings', false);
 });
 
-it('renders robots disallow rules for sensitive areas', function (): void {
+it('renders a minimal robots file by default', function (): void {
     $this->get('/robots.txt')
         ->assertOk()
         ->assertHeader('Content-Type', 'text/plain; charset=utf-8')
         ->assertSee('User-agent: *', false)
-        ->assertSee('Disallow: /login', false)
-        ->assertSee('Disallow: /register', false)
-        ->assertSee('Disallow: /forgot-password', false)
-        ->assertSee('Disallow: /reset-password', false)
-        ->assertSee('Disallow: /dashboard', false)
-        ->assertSee('Disallow: /admin', false)
-        ->assertSee('Disallow: /profile', false)
-        ->assertSee('Disallow: /settings', false)
+        ->assertDontSee('Disallow:', false)
+        ->assertSee('Sitemap: '.url('/sitemap.xml'), false);
+});
+
+it('renders configured robots disallow rules when explicitly set', function (): void {
+    config(['app_settings.seo.robots_disallow' => ['/tmp', 'preview']]);
+
+    $this->get('/robots.txt')
+        ->assertOk()
+        ->assertSee('Disallow: /tmp', false)
+        ->assertSee('Disallow: /preview', false)
         ->assertSee('Sitemap: '.url('/sitemap.xml'), false);
 });
 
@@ -64,3 +69,40 @@ it('uses app settings as the source for default seo metadata', function (): void
         'twitterCard' => 'summary',
     ]);
 });
+
+it('marks private seo pages as noindex', function (): void {
+    config(['app_settings.seo.title_suffix' => ' | Teste']);
+
+    expect(SeoData::privatePage('Dashboard')->toArray())->toMatchArray([
+        'title' => 'Dashboard | Teste',
+        'robots' => 'noindex,nofollow',
+    ]);
+});
+
+it('sets noindex metadata on auth pages', function (string $path, string $component): void {
+    $this->withoutVite();
+
+    $this->get($path)->assertInertia(fn (Assert $page) => $page
+        ->component($component)
+        ->where('seo.robots', 'noindex,nofollow')
+    );
+})->with([
+    ['/login', 'auth/Login'],
+    ['/register', 'auth/Register'],
+    ['/forgot-password', 'auth/ForgotPassword'],
+    ['/reset-password/test-token?email=cliente@example.com', 'auth/ResetPassword'],
+]);
+
+it('sets noindex metadata on authenticated private pages', function (string $path, string $component): void {
+    $this->withoutVite();
+
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->get($path)->assertInertia(fn (Assert $page) => $page
+        ->component($component)
+        ->where('seo.robots', 'noindex,nofollow')
+    );
+})->with([
+    ['/dashboard', 'Dashboard'],
+    ['/profile', 'Profile/Edit'],
+]);

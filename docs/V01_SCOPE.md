@@ -10,7 +10,7 @@ Ela foi aprovada com ressalvas para acelerar novos produtos, padronizar escolhas
 
 - Estrutura Laravel + Inertia + Vue 3 com TypeScript.
 - Autenticacao minima com Fortify.
-- Paginas iniciais publicas, login, cadastro, reset de senha e dashboard simples.
+- Páginas iniciais públicas, login, cadastro, reset de senha e dashboard simples.
 - SEO basico, sitemap e robots.
 - Tracking first-party opcional e GA4 opcional com guards para ambiente local/debug.
 - Upload basico de imagens e PDF com Policy, validacao e Storage.
