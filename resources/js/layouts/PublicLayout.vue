@@ -11,11 +11,11 @@ const page = usePage<PageProps>();
     <header
       class="border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
     >
-      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" class="font-semibold text-slate-950 dark:text-white">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+        <Link href="/" class="truncate font-semibold text-slate-950 dark:text-white">
           {{ page.props.appName }}
         </Link>
-        <div class="flex items-center gap-4 text-sm">
+        <div class="flex shrink-0 items-center gap-2 text-sm sm:gap-4">
           <ThemeToggle />
           <Link
             href="/login"

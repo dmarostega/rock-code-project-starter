@@ -12,9 +12,9 @@ const logout = (): void => router.post('/logout');
     <header
       class="border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
     >
-      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <div class="flex items-center gap-5">
-          <Link href="/" class="font-semibold text-slate-950 dark:text-white">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+        <div class="flex min-w-0 items-center gap-3 sm:gap-5">
+          <Link href="/" class="truncate font-semibold text-slate-950 dark:text-white">
             {{ page.props.appName }}
           </Link>
           <Link
@@ -24,7 +24,7 @@ const logout = (): void => router.post('/logout');
             Dashboard
           </Link>
         </div>
-        <div class="flex items-center gap-4 text-sm">
+        <div class="flex shrink-0 items-center gap-2 text-sm sm:gap-4">
           <ThemeToggle />
           <span
             v-if="page.props.auth.user"
