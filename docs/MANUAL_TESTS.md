@@ -18,11 +18,13 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 1. Acesse `/register`, crie uma conta com nome, e-mail e senha válidos.
 2. Confirme o redirecionamento para `/dashboard`.
-3. Saia da conta.
-4. Acesse `/login` com a conta criada e confirme novo acesso ao dashboard.
-5. Tente acessar `/dashboard` sem sessão e confirme redirecionamento para `/login`.
-6. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
-7. Valide mensagens de erro para credenciais inválidas no login.
+3. Confirme que o dashboard exibe navegação autenticada com link para dashboard e ação de sair.
+4. Saia da conta.
+5. Confirme que a home, login, cadastro e reset de senha exibem somente navegação pública.
+6. Acesse `/login` com a conta criada e confirme novo acesso ao dashboard.
+7. Tente acessar `/dashboard` sem sessão e confirme redirecionamento para `/login`.
+8. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
+9. Valide mensagens de erro para credenciais inválidas no login.
 
 ## 3. Reset de senha
 

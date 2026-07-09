@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SeoHead from '@/components/SeoHead.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 import type { SeoData } from '@/types';
 import { useForm } from '@inertiajs/vue3';
 
@@ -10,7 +10,7 @@ const form = useForm({ email: '' });
 
 <template>
   <SeoHead :seo="seo" />
-  <AppLayout>
+  <PublicLayout>
     <form
       class="mx-auto max-w-md space-y-4 rounded-xl border bg-white p-6"
       @submit.prevent="form.post('/forgot-password')"
@@ -35,5 +35,5 @@ const form = useForm({ email: '' });
         Enviar link
       </button>
     </form>
-  </AppLayout>
+  </PublicLayout>
 </template>

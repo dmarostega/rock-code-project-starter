@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SeoHead from '@/components/SeoHead.vue';
 import { useGrowth } from '@/composables/useGrowth';
-import AppLayout from '@/layouts/AppLayout.vue';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 import type { SeoData } from '@/types';
 import { Link } from '@inertiajs/vue3';
 
@@ -11,7 +11,7 @@ const { track } = useGrowth();
 
 <template>
   <SeoHead :seo="seo" />
-  <AppLayout>
+  <PublicLayout>
     <section class="py-20 text-center">
       <p class="mb-3 text-sm font-semibold tracking-widest text-blue-700 uppercase">
         Rock Code Starter
@@ -30,5 +30,5 @@ const { track } = useGrowth();
         >Começar</Link
       >
     </section>
-  </AppLayout>
+  </PublicLayout>
 </template>
