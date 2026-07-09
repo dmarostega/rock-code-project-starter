@@ -1,10 +1,13 @@
 import '../css/app.css';
+import { initializeTheme } from '@/composables/useTheme';
 import { createInertiaApp } from '@inertiajs/vue3';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Rock Code Starter';
 const pages = import.meta.glob<{ default: DefineComponent }>('./pages/**/*.vue', { eager: true });
+
+initializeTheme();
 
 createInertiaApp({
   title: (title) => (title ? `${title}` : appName),

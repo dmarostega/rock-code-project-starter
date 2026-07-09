@@ -36,7 +36,10 @@ const upload = async (): Promise<void> => {
 </script>
 
 <template>
-  <form class="space-y-4 rounded-xl border border-slate-200 bg-white p-5" @submit.prevent="upload">
+  <form
+    class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+    @submit.prevent="upload"
+  >
     <div>
       <label for="media-file" class="mb-1 block text-sm font-medium">Imagem ou PDF</label>
       <input
@@ -52,13 +55,13 @@ const upload = async (): Promise<void> => {
       <input
         id="media-alt"
         v-model="altText"
-        class="w-full rounded-lg border border-slate-300 px-3 py-2"
+        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
         maxlength="255"
       />
     </div>
-    <p v-if="error" class="text-sm text-red-700">{{ error }}</p>
+    <p v-if="error" class="text-sm text-red-700 dark:text-red-300">{{ error }}</p>
     <button
-      class="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white disabled:opacity-50"
+      class="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-400"
       :disabled="loading || !file"
     >
       {{ loading ? 'Enviando...' : 'Enviar arquivo' }}

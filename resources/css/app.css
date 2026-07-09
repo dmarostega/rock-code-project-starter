@@ -3,8 +3,18 @@
 @source '../views/**/*.blade.php';
 @source '../js/**/*.{ts,vue}';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  @apply bg-slate-50 text-slate-950 dark:bg-slate-950 dark:text-slate-100;
+}
+
+body {
+  @apply min-h-screen bg-inherit;
 }
 
 button,
