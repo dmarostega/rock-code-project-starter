@@ -4,7 +4,7 @@ Este guia cobre o deploy manual mínimo do starter em produção. Ele serve como
 
 ## 1. Pré-requisitos
 
-- PHP compatível com `composer.json`.
+- PHP 8.3 ou superior, conforme a restrição `^8.3` do `composer.json`.
 - Extensões PHP exigidas pelo Laravel e pelas dependências do projeto.
 - Composer instalado.
 - Node.js e npm instalados para gerar os assets.
@@ -30,6 +30,11 @@ npm run build
 ```
 
 5. Ajuste permissões para que o usuário do PHP consiga escrever em `storage` e `bootstrap/cache`.
+
+Permissões dependem do usuário/grupo do servidor. Como referência, mantenha o código-fonte somente leitura para o processo web quando possível e libere escrita apenas em:
+
+- `storage`;
+- `bootstrap/cache`.
 
 ## 3. `.env` mínimo de produção
 
@@ -144,11 +149,13 @@ server {
 }
 ```
 
+O valor de `fastcgi_pass` é apenas exemplo. Ajuste o socket ou host/porta conforme a versão PHP e a configuração do PHP-FPM no servidor.
+
 No CloudPanel ou painel similar:
 
 1. Configure o site como PHP.
 2. Aponte o document root para `public`.
-3. Configure a versão PHP compatível com o projeto.
+3. Configure PHP 8.3 ou superior.
 4. Configure HTTPS.
 5. Confirme que `.env`, `storage`, `vendor` e arquivos de código não são acessíveis pelo navegador.
 
@@ -173,7 +180,17 @@ Se o produto derivado usar jobs assíncronos reais, configure um worker persiste
 7. Com `GA_ENABLED=false`, confirme no Network que não há requests para `googletagmanager.com` nem `analytics.google.com/g/collect`.
 8. Revise logs em `storage/logs` após a validação.
 
-## 8. Antes de liberar
+## 8. Rollback manual
+
+Antes de cada deploy, mantenha uma versão anterior conhecida e um backup recente. Em caso de falha:
+
+1. Reaponte o release atual para a versão anterior ou restaure os arquivos da versão estável.
+2. Restaure o backup do banco se o deploy executou migrations incompatíveis.
+3. Execute `php artisan optimize:clear`.
+4. Recrie caches com `php artisan config:cache`, `php artisan route:cache` e `php artisan view:cache`.
+5. Valide `/up`, home, login e logs antes de liberar o tráfego novamente.
+
+## 9. Antes de liberar
 
 - Faça backup do banco e dos arquivos persistentes.
 - Confirme que existe caminho simples de rollback para a versão anterior.
