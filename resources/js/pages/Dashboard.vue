@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MediaUploader from '@/components/MediaUploader.vue';
 import SeoHead from '@/components/SeoHead.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import type { MediaAsset, SeoData } from '@/types';
 import { ref } from 'vue';
 
@@ -11,7 +11,7 @@ const uploaded = ref<MediaAsset[]>([]);
 
 <template>
   <SeoHead :seo="seo" />
-  <AppLayout>
+  <AuthenticatedLayout>
     <div class="grid gap-8 lg:grid-cols-2">
       <section>
         <h1 class="text-3xl font-bold">Dashboard</h1>
@@ -29,5 +29,5 @@ const uploaded = ref<MediaAsset[]>([]);
         </ul>
       </section>
     </div>
-  </AppLayout>
+  </AuthenticatedLayout>
 </template>
