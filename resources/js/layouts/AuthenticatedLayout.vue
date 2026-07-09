@@ -23,6 +23,12 @@ const logout = (): void => router.post('/logout');
           >
             Dashboard
           </Link>
+          <Link
+            href="/profile"
+            class="text-sm font-medium text-blue-700 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-200"
+          >
+            Perfil
+          </Link>
         </div>
         <div class="flex shrink-0 items-center gap-2 text-sm sm:gap-4">
           <ThemeToggle />
