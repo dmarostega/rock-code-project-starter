@@ -87,6 +87,8 @@ APP_SEO_DEFAULT_DESCRIPTION="Descrição pública do produto."
 APP_SEO_DEFAULT_IMAGE=https://seudominio.com/images/social-default.png
 APP_SEO_TWITTER_CARD=summary_large_image
 APP_SEO_ROBOTS=index,follow
+APP_SEO_SITEMAP_PATHS="/"
+APP_SEO_ROBOTS_DISALLOW=""
 APP_FLAG_PUBLIC_REGISTRATION=true
 APP_FLAG_MEDIA_UPLOADS=true
 
@@ -106,6 +108,8 @@ Obrigatório:
 - Use credenciais reais de banco, e-mail e domínio.
 - Não publique `.env` nem deixe o document root apontado para a raiz do projeto.
 - Revise `MEDIA_DISK`: arquivos sensíveis devem usar disco privado e entrega autorizada ou URL temporária.
+- Defina `APP_SEO_DEFAULT_IMAGE` com URL absoluta publica para compartilhamento social e inclua em `APP_SEO_SITEMAP_PATHS` somente paginas publicas indexaveis.
+- Mantenha `APP_SEO_ROBOTS_DISALLOW` vazio por padrao. Configure `Disallow` apenas quando a intencao for impedir crawling de rotas especificas; isso nao substitui `noindex` nem autenticacao.
 
 ## 4. Banco, cache e storage
 

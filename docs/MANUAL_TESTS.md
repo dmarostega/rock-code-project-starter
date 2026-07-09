@@ -37,10 +37,10 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 ## 2.2 Tema claro/escuro
 
 1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
-2. Repita sem preferencia salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
-3. Use o botao de tema na home e confirme alternancia entre light e dark.
+2. Repita sem preferência salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
+3. Use o botão de tema na home e confirme alternância entre light e dark.
 4. Recarregue a página e confirme que a escolha manual permanece salva no navegador.
-5. Acesse `/login`, `/register`, `/forgot-password`, `/reset-password` e `/dashboard`; confirme texto, campos, botoes e cards legiveis nos dois temas.
+5. Acesse `/login`, `/register`, `/forgot-password`, `/reset-password` e `/dashboard`; confirme texto, campos, botões e cards legíveis nos dois temas.
 
 ## 3. Reset de senha
 
@@ -67,18 +67,20 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 1. Abra a home e inspecione o HTML renderizado.
 2. Confirme `title`, `description`, `canonical`, Open Graph e Twitter Card.
-3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis aparecem.
-4. Acesse `/robots.txt` e confirme que o produto derivado revisou padrões de auth, dashboard, admin, profile, settings e reset password antes de publicar.
-5. Inspecione `/login`, `/register`, `/forgot-password`, um link de `/reset-password`, `/dashboard` e `/profile`; confirme `<meta name="robots" content="noindex,nofollow">`.
-6. Para novas telas privadas como settings ou admin, confirme que o controller usa `SeoData::privatePage()`.
-7. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS` foram revisados no `.env` do produto.
-8. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica e absoluta ou resolvivel pela aplicacao.
+3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis de `APP_SEO_SITEMAP_PATHS` aparecem.
+4. Confirme que `/login`, `/register`, `/forgot-password`, `/reset-password`, `/dashboard`, `/admin`, `/profile` e `/settings` não aparecem no sitemap.
+5. Acesse `/robots.txt` com o `.env.example` padrão e confirme que ele exibe apenas `User-agent: *` e `Sitemap: ...`, sem `Disallow`.
+6. Inspecione `/login`, `/register`, `/forgot-password`, um link de `/reset-password`, `/dashboard` e `/profile`; confirme `<meta name="robots" content="noindex,nofollow">`.
+7. Para novas telas privadas como settings ou admin, confirme que o controller usa `SeoData::privatePage()`.
+8. Ao adicionar uma nova página pública, inclua seu caminho em `APP_SEO_SITEMAP_PATHS`; não adicione telas autenticadas, operacionais ou de reset de senha.
+9. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD`, `APP_SEO_ROBOTS`, `APP_SEO_SITEMAP_PATHS` e `APP_SEO_ROBOTS_DISALLOW` foram revisados no `.env` do produto.
+10. Para produtos públicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social pública, absoluta e acessível sem login.
 
-## 5.1 Configuracoes gerais do aplicativo
+## 5.1 Configurações gerais do aplicativo
 
-1. Confirme que `APP_PUBLIC_NAME` aparece na navegacao publica e autenticada.
-2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado e contem apenas dados publicos.
-3. Confirme que `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED` refletem a decisao inicial do produto.
+1. Confirme que `APP_PUBLIC_NAME` aparece na navegação pública e autenticada.
+2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado e contêm apenas dados públicos.
+3. Confirme que `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED` refletem a decisão inicial do produto.
 4. Confirme que nenhuma tela administrativa complexa foi adicionada para essas configurações neste ciclo.
 
 ## 6. Growth e GA4
@@ -87,7 +89,7 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 2. No Network do navegador, confirme que não há requests para `googletagmanager.com` nem `analytics.google.com/g/collect`.
 3. Confirme que `POST /growth/events` retorna 403 com `GROWTH_ENABLED=false`.
 4. Habilite `GROWTH_ENABLED=true` e `VITE_GROWTH_ENABLED=true`.
-5. Acesse `/?utm_source=manual&utm_campaign=starter`, clique em "Comecar" e confirme o registro do evento em `growth_events`.
+5. Acesse `/?utm_source=manual&utm_campaign=starter`, clique em "Começar" e confirme o registro do evento em `growth_events`.
 6. Confirme que o evento não persiste IP em claro.
 7. Confirme que metadata com chaves sensíveis, objetos aninhados ou strings longas é recusada.
 8. Em ambiente de produção controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`.

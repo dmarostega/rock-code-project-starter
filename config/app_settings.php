@@ -21,6 +21,8 @@ return [
         'default_image' => env('APP_SEO_DEFAULT_IMAGE', env('SEO_DEFAULT_IMAGE')),
         'twitter_card' => env('APP_SEO_TWITTER_CARD', env('SEO_TWITTER_CARD', 'summary_large_image')),
         'robots' => env('APP_SEO_ROBOTS', env('SEO_ROBOTS', 'index,follow')),
+        'sitemap_paths' => explode(',', (string) env('APP_SEO_SITEMAP_PATHS', '/')),
+        'robots_disallow' => explode(',', (string) env('APP_SEO_ROBOTS_DISALLOW', '')),
     ],
 
     'flags' => [
