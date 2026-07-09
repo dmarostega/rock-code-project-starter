@@ -14,8 +14,24 @@ export interface SeoData {
   twitterCard: string;
 }
 
+export interface AppSettings {
+  publicName: string;
+  contact: {
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+    url: string | null;
+  };
+  flags: {
+    public_registration: boolean;
+    media_uploads: boolean;
+    growth_tracking: boolean;
+  };
+}
+
 export interface PageProps {
   appName: string;
+  appSettings: AppSettings;
   auth: { user: User | null };
   flash: { success: string | null; error: string | null };
   seo: SeoData;

@@ -18,22 +18,22 @@ final readonly class SeoData
     public static function defaults(): self
     {
         return new self(
-            title: (string) config('seo.default_title'),
-            description: config('seo.default_description'),
-            image: self::absoluteUrl(config('seo.default_image')),
+            title: (string) config('app_settings.seo.default_title'),
+            description: config('app_settings.seo.default_description'),
+            image: self::absoluteUrl(config('app_settings.seo.default_image')),
             canonical: url()->current(),
-            robots: (string) config('seo.robots'),
+            robots: (string) config('app_settings.seo.robots'),
         );
     }
 
     public static function page(string $title, ?string $description = null, ?string $image = null): self
     {
         return new self(
-            title: $title.(string) config('seo.title_suffix'),
-            description: $description ?? config('seo.default_description'),
-            image: self::absoluteUrl($image ?? config('seo.default_image')),
+            title: $title.(string) config('app_settings.seo.title_suffix'),
+            description: $description ?? config('app_settings.seo.default_description'),
+            image: self::absoluteUrl($image ?? config('app_settings.seo.default_image')),
             canonical: url()->current(),
-            robots: (string) config('seo.robots'),
+            robots: (string) config('app_settings.seo.robots'),
         );
     }
 
@@ -47,7 +47,7 @@ final readonly class SeoData
             'canonical' => $this->canonical,
             'robots' => $this->robots,
             'type' => $this->type,
-            'twitterCard' => (string) config('seo.twitter_card'),
+            'twitterCard' => (string) config('app_settings.seo.twitter_card'),
         ];
     }
 
