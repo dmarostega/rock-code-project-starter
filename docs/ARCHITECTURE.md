@@ -11,7 +11,7 @@
 
 ### SEO
 
-`config/app_settings.php` concentra a fundacao reaproveitavel de configuracoes publicas: nome visivel, contato principal, SEO default revisavel e flags simples. `App\Support\Seo\SeoData` usa essa fundacao para normalizar title, description, canonical, Open Graph e Twitter Card. Cada página entrega a prop `seo` e `SeoHead.vue` publica as tags. O sitemap inicial é intencionalmente simples e deve passar a usar URLs reais do produto.
+`config/app_settings.php` concentra a fundacao reaproveitavel de configuracoes publicas: nome visivel, contato principal, SEO default revisavel e flags simples. `App\Support\Seo\SeoData` usa essa fundacao para normalizar title, description, canonical, Open Graph e Twitter Card. Cada página entrega a prop `seo` e `SeoHead.vue` publica as tags. Use `SeoData::page()` somente em paginas publicas indexaveis. Use `SeoData::privatePage()` em auth, dashboard, profile, settings, admin e qualquer tela restrita ou operacional para publicar `noindex,nofollow`. O sitemap inicial é intencionalmente simples e deve passar a usar URLs reais do produto.
 
 ### Growth
 

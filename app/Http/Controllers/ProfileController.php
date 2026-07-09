@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function edit(): Response
     {
         return Inertia::render('Profile/Edit', [
-            'seo' => SeoData::page('Meu perfil')->toArray(),
+            'seo' => SeoData::privatePage('Meu perfil')->toArray(),
         ]);
     }
 

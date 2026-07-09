@@ -69,8 +69,10 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 2. Confirme `title`, `description`, `canonical`, Open Graph e Twitter Card.
 3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis aparecem.
 4. Acesse `/robots.txt` e confirme que o produto derivado revisou padrões de auth, dashboard, admin, profile, settings e reset password antes de publicar.
-5. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS` foram revisados no `.env` do produto.
-6. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica e absoluta ou resolvivel pela aplicacao.
+5. Inspecione `/login`, `/register`, `/forgot-password`, um link de `/reset-password`, `/dashboard` e `/profile`; confirme `<meta name="robots" content="noindex,nofollow">`.
+6. Para novas telas privadas como settings ou admin, confirme que o controller usa `SeoData::privatePage()`.
+7. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD` e `APP_SEO_ROBOTS` foram revisados no `.env` do produto.
+8. Para produtos publicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social publica e absoluta ou resolvivel pela aplicacao.
 
 ## 5.1 Configuracoes gerais do aplicativo
 
