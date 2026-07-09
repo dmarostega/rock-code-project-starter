@@ -19,7 +19,14 @@
 
 ### Media
 
-`MediaService` aceita imagens e PDF. Imagens são redimensionadas e regravadas em WebP, removendo metadados do arquivo original. O disco, limite e qualidade são configuráveis. Para arquivos privados, troque o disco e entregue URLs temporárias por endpoint autorizado.
+`MediaService` aceita imagens e PDF. Imagens são redimensionadas e regravadas em WebP, removendo metadados do arquivo original. O disco, limite e qualidade são configuráveis.
+
+Padrão recomendado:
+
+- `MEDIA_DISK=public` é aceitável para arquivos públicos, como imagens de perfil, thumbnails, fotos de produtos e documentos que devem estar acessíveis por URL sem autorização específica.
+- Troque para disco privado quando o arquivo tiver restrição de acesso, como documentos com dados pessoais, contratos, faturas, relatórios internos, arquivos médicos/legais ou qualquer conteúdo que não deva ser alcançável por URL pública.
+- Arquivos sensíveis nunca devem ficar em storage público. Mesmo quando o arquivo não é listado, a URL pode ser compartilhada, indexada ou adivinhada; o padrão seguro é usar disco privado e entregar acesso por endpoint autorizado ou URL temporária.
+- Em novos produtos, defina essa política no início do projeto: público para conteúdo aberto e privado para conteúdo restrito. A evolução futura de download protegido para discos privados pode ser tratada como pendência P1/P2.
 
 ## Remoção
 
