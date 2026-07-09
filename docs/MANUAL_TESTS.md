@@ -1,16 +1,78 @@
-# Roteiro manual breve
+# Roteiro manual da v0.1
 
-Apos instalar as dependencias:
+Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes de adotar o repositório em um novo produto.
 
-1. Execute `composer setup` e abra a home.
-2. Inspecione title, description, canonical e Open Graph no HTML.
+## 1. Setup limpo
+
+1. Clone o repositório em uma pasta nova.
+2. Copie `.env.example` para `.env`, mantendo os padrões locais.
+3. Confirme que `APP_ENV=local`, `APP_DEBUG=true`, `DB_CONNECTION=sqlite`, `GROWTH_ENABLED=false`, `GA_ENABLED=false` e `GA_MEASUREMENT_ID=` estão definidos.
+4. Execute `composer setup`.
+5. Confirme que `database/database.sqlite` foi criado e que as migrations rodaram sem erro.
+6. Execute `php artisan storage:link`.
+7. Execute `composer dev` e abra `http://localhost:8000` ou a URL exibida pelo servidor.
+8. Confirme que a home carrega sem erro no console do navegador.
+9. Acesse `/up` e confirme resposta HTTP 200.
+
+## 2. Autenticação
+
+1. Acesse `/register`, crie uma conta com nome, e-mail e senha válidos.
+2. Confirme o redirecionamento para `/dashboard`.
+3. Saia da conta.
+4. Acesse `/login` com a conta criada e confirme novo acesso ao dashboard.
+5. Tente acessar `/dashboard` sem sessão e confirme redirecionamento para `/login`.
+6. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
+7. Valide mensagens de erro para credenciais inválidas no login.
+
+## 3. Reset de senha
+
+1. Confirme que `MAIL_MAILER=log` está configurado no ambiente local.
+2. Acesse `/forgot-password` e solicite reset para o e-mail cadastrado.
+3. Abra `storage/logs/laravel.log` e localize o link de reset gerado.
+4. Acesse o link, defina uma nova senha e confirme o redirecionamento esperado.
+5. Saia da conta e entre novamente usando a nova senha.
+6. Confirme que a senha antiga não autentica mais.
+
+## 4. Upload e storage
+
+1. Acesse o dashboard autenticado.
+2. Envie arquivos JPG, PNG, WebP e PDF válidos.
+3. Confirme que os arquivos aparecem na listagem do dashboard.
+4. Confirme que imagens grandes são convertidas para WebP e respeitam `MEDIA_IMAGE_MAX_WIDTH`.
+5. Envie um arquivo inválido, como `.txt` ou imagem corrompida, e confirme que o upload é recusado com mensagem clara.
+6. Envie um arquivo acima de `MEDIA_MAX_SIZE_KB` e confirme que o upload é recusado.
+7. Confirme que `MEDIA_DISK=public` grava arquivos no disco público e que a URL pública funciona para arquivos não sensíveis.
+8. Revise se o produto derivado realmente pode usar storage público. Para arquivos sensíveis, troque para disco privado e implemente entrega autorizada ou URL temporária antes da adoção.
+9. Com dois usuários diferentes, confirme que um usuário não consegue excluir mídia pertencente ao outro.
+
+## 5. SEO
+
+1. Abra a home e inspecione o HTML renderizado.
+2. Confirme `title`, `description`, `canonical`, Open Graph e Twitter Card.
+3. Acesse `/sitemap.xml` e confirme que somente páginas públicas indexáveis aparecem.
+4. Acesse `/robots.txt` e confirme que o produto derivado revisou padrões de auth, dashboard, admin, profile, settings e reset password antes de publicar.
+5. Confirme que `SEO_DEFAULT_TITLE`, `SEO_TITLE_SUFFIX`, `SEO_DEFAULT_DESCRIPTION`, `SEO_DEFAULT_IMAGE` e `SEO_TWITTER_CARD` foram revisados no `.env` do produto.
+
+## 6. Growth e GA4
+
+1. Com o `.env.example` padrão, abra a home em `http://localhost`.
+2. No Network do navegador, confirme que não há requests para `googletagmanager.com` nem `analytics.google.com/g/collect`.
 3. Confirme que `POST /growth/events` retorna 403 com `GROWTH_ENABLED=false`.
-4. Habilite `GROWTH_ENABLED=true` e `VITE_GROWTH_ENABLED=true`, acesse `/?utm_source=manual&utm_campaign=starter`, clique em "Comecar" e confirme o evento em `growth_events` sem IP em claro.
-5. Confirme que metadata com chaves sensiveis, objetos aninhados ou strings longas e recusada.
-6. Crie uma conta, entre no dashboard e envie JPG, PNG, WebP e PDF validos.
-7. Confirme que imagens grandes viram WebP com largura maxima configurada e que arquivo invalido e recusado.
-8. Confirme que um usuario nao consegue excluir arquivo pertencente a outro usuario.
-9. Saia da conta e confirme que `/dashboard` e um envio para `/media` redirecionam para `/login`.
-10. Com o `.env.example` padrao, abra a home em `http://localhost` e confirme no Network que nao ha requests para `googletagmanager.com` nem `analytics.google.com/g/collect`.
-11. Em ambiente de producao controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`; confirme que a tag GA4 aparece apenas em host publico.
-12. Execute `composer ci:check`.
+4. Habilite `GROWTH_ENABLED=true` e `VITE_GROWTH_ENABLED=true`.
+5. Acesse `/?utm_source=manual&utm_campaign=starter`, clique em "Comecar" e confirme o registro do evento em `growth_events`.
+6. Confirme que o evento não persiste IP em claro.
+7. Confirme que metadata com chaves sensíveis, objetos aninhados ou strings longas é recusada.
+8. Em ambiente de produção controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`.
+9. Confirme que a tag GA4 aparece apenas em host público e nunca em local, debug ou sem measurement id.
+
+## 7. Qualidade e CI
+
+1. Execute `composer ci:check`.
+2. Execute `npm run quality`.
+3. Corrija falhas antes de promover a base para v0.1 ou derivar um produto.
+
+## 8. Registro final
+
+1. Registre ambiente, data, branch, commit e comandos executados.
+2. Registre quais módulos opcionais serão mantidos ou removidos no produto derivado.
+3. Registre qualquer exceção aceita para storage, analytics, SEO ou autenticação.
