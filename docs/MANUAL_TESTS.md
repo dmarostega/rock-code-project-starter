@@ -39,7 +39,7 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
 2. Repita sem preferencia salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
 3. Use o botao de tema na home e confirme alternancia entre light e dark.
-4. Recarregue a pagina e confirme que a escolha manual permanece salva no navegador.
+4. Recarregue a página e confirme que a escolha manual permanece salva no navegador.
 5. Acesse `/login`, `/register`, `/forgot-password`, `/reset-password` e `/dashboard`; confirme texto, campos, botoes e cards legiveis nos dois temas.
 
 ## 3. Reset de senha
@@ -79,7 +79,7 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 1. Confirme que `APP_PUBLIC_NAME` aparece na navegacao publica e autenticada.
 2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado e contem apenas dados publicos.
 3. Confirme que `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED` refletem a decisao inicial do produto.
-4. Confirme que nenhuma tela administrativa complexa foi adicionada para essas configuracoes neste ciclo.
+4. Confirme que nenhuma tela administrativa complexa foi adicionada para essas configurações neste ciclo.
 
 ## 6. Growth e GA4
 

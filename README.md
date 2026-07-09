@@ -19,7 +19,7 @@ Antes de usar em um produto, leia `docs/V01_SCOPE.md` e execute `docs/ADOPTION_C
 ## Recursos incluidos
 
 - Autenticacao minima com login, cadastro e recuperacao via Fortify.
-- SEO por pagina, canonical, Open Graph, Twitter Card, sitemap e robots.
+- SEO por página, canonical, Open Graph, Twitter Card, sitemap e robots.
 - Tracking first-party de eventos e atribuicao UTM, desligado por padrao ate o produto definir finalidade, taxonomia e consentimento.
 - GA4/GTag opcional via `GA_ENABLED=false` e `GA_MEASUREMENT_ID=`, com guards de producao, debug e host local.
 - Upload de imagens/PDF, WebP, limite de dimensao, Storage e Policy.
