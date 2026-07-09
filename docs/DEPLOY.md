@@ -4,7 +4,7 @@ Este guia cobre o deploy manual mínimo do starter em produção. Ele serve como
 
 ## 1. Pré-requisitos
 
-- PHP 8.3 ou superior, conforme a restrição `^8.3` do `composer.json`.
+- PHP 8.4 ou superior, conforme a restrição `^8.4` do `composer.json`.
 - Extensões PHP exigidas pelo Laravel e pelas dependências do projeto.
 - Composer instalado.
 - Node.js e npm instalados para gerar os assets.
@@ -146,7 +146,7 @@ server {
     location = /robots.txt  { access_log off; log_not_found off; }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
     }
@@ -163,7 +163,7 @@ No CloudPanel ou painel similar:
 
 1. Configure o site como PHP.
 2. Aponte o document root para `public`.
-3. Configure PHP 8.3 ou superior.
+3. Configure PHP 8.4 ou superior.
 4. Configure HTTPS.
 5. Confirme que `.env`, `storage`, `vendor` e arquivos de código não são acessíveis pelo navegador.
 
