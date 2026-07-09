@@ -23,7 +23,7 @@ const uploaded = ref<MediaAsset[]>([]);
         <ul class="mt-4 space-y-2 text-sm">
           <li v-for="asset in uploaded" :key="asset.id">
             <a class="text-blue-700 underline" :href="asset.url" target="_blank">{{
-              asset.original_name
+              asset.display_name
             }}</a>
           </li>
         </ul>

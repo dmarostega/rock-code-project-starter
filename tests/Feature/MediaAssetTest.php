@@ -10,13 +10,35 @@ it('stores an allowed document for an authenticated user', function (): void {
     config(['media.disk' => 'public']);
     $user = User::factory()->create();
 
-    $this->actingAs($user)->post('/media', [
+    $response = $this->actingAs($user)->post('/media', [
         'file' => UploadedFile::fake()->create('briefing.pdf', 100, 'application/pdf'),
+        'alt_text' => 'Briefing comercial',
     ])->assertCreated();
 
     $asset = MediaAsset::query()->sole();
     expect($asset->user_id)->toBe($user->id)->and($asset->kind)->toBe('document');
     Storage::disk('public')->assertExists($asset->path);
+
+    expect(array_keys($response->json('data')))->toBe([
+        'id',
+        'kind',
+        'mime_type',
+        'size',
+        'width',
+        'height',
+        'alt_text',
+        'display_name',
+        'url',
+    ])->and($response->json('data'))->toMatchArray([
+        'id' => $asset->id,
+        'kind' => 'document',
+        'mime_type' => 'application/pdf',
+        'size' => 102400,
+        'width' => null,
+        'height' => null,
+        'alt_text' => 'Briefing comercial',
+        'display_name' => 'Briefing comercial',
+    ]);
 });
 
 it('blocks uploads with a disallowed mime type', function (): void {

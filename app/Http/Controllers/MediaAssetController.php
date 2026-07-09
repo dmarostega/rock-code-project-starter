@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMediaRequest;
+use App\Http\Resources\MediaAssetResource;
 use App\Models\MediaAsset;
 use App\Services\MediaService;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,7 @@ class MediaAssetController extends Controller
     {
         $asset = $media->store($request->file('file'), $request->user(), $request->string('alt_text')->toString() ?: null);
 
-        return response()->json(['data' => $asset], 201);
+        return response()->json(['data' => new MediaAssetResource($asset)], 201);
     }
 
     public function destroy(MediaAsset $mediaAsset, MediaService $media): RedirectResponse
