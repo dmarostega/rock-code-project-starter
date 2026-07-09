@@ -41,4 +41,7 @@ composer test
 composer ci:check
 ```
 
-Leia primeiro `docs/ADOPTION_CHECKLIST.md` e remova tudo que o novo produto nao precisar.
+## Documentacao
+
+- Leia `docs/ADOPTION_CHECKLIST.md` antes de iniciar um produto e remova tudo que o novo produto nao precisar.
+- Use `docs/DEPLOY.md` como roteiro minimo para deploy manual em VPS, CloudPanel ou ambiente equivalente.
