@@ -26,7 +26,15 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 8. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
 9. Valide mensagens de erro para credenciais inválidas no login.
 
-## 2.1 Tema claro/escuro
+## 2.1 Perfil do usuário
+
+1. Acesse `/profile` sem sessão e confirme redirecionamento para `/login`.
+2. Entre com uma conta válida e acesse `/profile` pela navegação autenticada.
+3. Confirme que nome, e-mail e referência para redefinição de senha aparecem na tela.
+4. Altere o nome e salve; confirme a mensagem de sucesso e o novo nome na navegação.
+5. Tente salvar nome vazio e confirme a mensagem de validação.
+
+## 2.2 Tema claro/escuro
 
 1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
 2. Repita sem preferencia salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
