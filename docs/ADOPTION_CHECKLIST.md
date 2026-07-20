@@ -9,6 +9,7 @@
 - [ ] Escolher MySQL/PostgreSQL/SQLite e configurar `.env`.
 - [ ] Remover módulos opcionais que o produto não utilizará.
 - [ ] Definir domínio, casos de uso, Policies e eventos principais.
+- [ ] Preencher `docs/LGPD_CHECKLIST.md`, registrar as decisões de privacidade do produto e revisar o checklist a cada alteração relevante de dados, uploads, Growth ou analytics.
 - [ ] Decidir se o produto vai exigir verificação de e-mail; se sim, habilitar Fortify email verification, `MustVerifyEmail` e middleware `verified`.
 - [ ] Habilitar `GROWTH_ENABLED` somente depois de definir finalidade, taxonomia, consentimento, retenção e campos proibidos de metadata.
 - [ ] Definir a política de storage público vs privado; `MEDIA_DISK=public` é aceitável apenas para assets públicos, enquanto documentos sensíveis devem usar disco privado e entrega autorizada/temporária.
