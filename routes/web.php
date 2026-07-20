@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthPageController;
 use App\Http\Controllers\GrowthEventController;
 use App\Http\Controllers\MediaAssetController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeoController;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -27,3 +29,7 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/media', [MediaAssetController::class, 'store'])->name('media.store');
     Route::delete('/media/{mediaAsset}', [MediaAssetController::class, 'destroy'])->name('media.destroy');
 });
+
+Route::get('/admin', AdminDashboardController::class)
+    ->middleware(['auth', EnsureUserIsAdmin::class])
+    ->name('admin.dashboard');

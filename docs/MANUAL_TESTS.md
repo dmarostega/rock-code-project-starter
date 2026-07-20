@@ -34,7 +34,14 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 4. Altere o nome e salve; confirme a mensagem de sucesso e o novo nome na navegação.
 5. Tente salvar nome vazio e confirme a mensagem de validação.
 
-## 2.2 Tema claro/escuro
+## 2.2 Administração mínima
+
+1. Com `ADMIN_EMAILS` vazio, autentique um usuário e confirme que `/admin` retorna 403.
+2. Defina o e-mail da conta em `ADMIN_EMAILS`, reinicie a aplicação ou limpe o cache de configuração e confirme o acesso a `/admin`.
+3. Confirme que a tela usa o layout administrativo e possui o link de retorno ao dashboard.
+4. Remova o e-mail de `ADMIN_EMAILS` e confirme que o acesso volta a ser bloqueado.
+
+## 2.3 Tema claro/escuro
 
 1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
 2. Repita sem preferência salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.
