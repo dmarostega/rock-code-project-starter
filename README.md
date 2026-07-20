@@ -52,3 +52,4 @@ composer ci:check
 - Leia `docs/V01_SCOPE.md` para entender o escopo oficial, as limitacoes e o que fica fora do core da v0.1 experimental.
 - Leia `docs/ADOPTION_CHECKLIST.md` antes de iniciar um produto e remova tudo que o novo produto nao precisar.
 - Use `docs/DEPLOY.md` como roteiro minimo para deploy manual em VPS, CloudPanel ou ambiente equivalente.
+- Use `docs/OPERATIONS.md` para a rotina mínima de logs, health check, filas, scheduler, backup, rollback e validação pós-deploy.
