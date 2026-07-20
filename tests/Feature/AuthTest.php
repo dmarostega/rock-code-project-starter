@@ -66,6 +66,28 @@ it('blocks guests from the dashboard', function (): void {
     $this->get('/dashboard')->assertRedirect('/login');
 });
 
+it('blocks guests from the admin dashboard', function (): void {
+    $this->get('/admin')->assertRedirect('/login');
+});
+
+it('blocks authenticated non-admin users from the admin dashboard', function (): void {
+    config()->set('admin.emails', ['admin@example.com']);
+
+    $user = User::factory()->create(['email' => 'member@example.com']);
+
+    $this->actingAs($user)->get('/admin')->assertForbidden();
+});
+
+it('allows configured administrators to access the admin dashboard', function (): void {
+    config()->set('admin.emails', ['admin@example.com']);
+
+    $user = User::factory()->create(['email' => 'admin@example.com']);
+
+    $this->withoutVite();
+
+    $this->actingAs($user)->get('/admin')->assertOk();
+});
+
 it('blocks guests from media routes', function (): void {
     $this->post('/media')->assertRedirect('/login');
 });
