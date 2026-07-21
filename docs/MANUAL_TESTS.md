@@ -98,9 +98,10 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 4. Habilite `GROWTH_ENABLED=true` e `VITE_GROWTH_ENABLED=true`.
 5. Acesse `/?utm_source=manual&utm_campaign=starter`, clique em "Começar" e confirme o registro do evento em `growth_events`.
 6. Confirme que o evento não persiste IP em claro.
-7. Confirme que metadata com chaves sensíveis, objetos aninhados ou strings longas é recusada.
-8. Em ambiente de produção controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`.
-9. Confirme que a tag GA4 aparece apenas em host público e nunca em local, debug ou sem measurement id.
+7. Antes de habilitar Growth em um produto derivado, siga `docs/ANALYTICS_EVENT_TAXONOMY.md`, implemente a allowlist positiva e confirme que eventos, chaves e valores fora da taxonomia são recusados.
+8. Confirme que metadata com chaves sensíveis, objetos aninhados ou strings longas é recusada.
+9. Em ambiente de produção controlado, configure `GA_ENABLED=true`, `GA_MEASUREMENT_ID=G-XXXXXXXXXX` e `APP_DEBUG=false`.
+10. Confirme que a tag GA4 aparece apenas em host público e nunca em local, debug ou sem measurement id.
 
 ## 7. Qualidade e CI
 
