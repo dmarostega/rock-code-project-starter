@@ -9,6 +9,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
@@ -54,6 +55,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $request->expectsJson()
                 || $exception instanceof AuthenticationException
                 || $exception instanceof HttpExceptionInterface
+                || $exception instanceof ValidationException
             ) {
                 return null;
             }

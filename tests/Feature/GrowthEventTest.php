@@ -3,8 +3,6 @@
 use App\Models\GrowthEvent;
 
 it('captures campaign attribution without storing a raw ip', function (): void {
-    $this->withoutVite();
-
     config([
         'growth.enabled' => true,
         'app.key' => 'base64:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=',

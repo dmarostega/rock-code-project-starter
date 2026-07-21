@@ -5,8 +5,6 @@ use App\Support\Seo\SeoData;
 use Inertia\Testing\AssertableInertia as Assert;
 
 it('renders the home page and sitemap', function (): void {
-    $this->withoutVite();
-
     $this->get('/')->assertOk();
     $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml');
 });
@@ -80,8 +78,6 @@ it('marks private seo pages as noindex', function (): void {
 });
 
 it('sets noindex metadata on auth pages', function (string $path, string $component): void {
-    $this->withoutVite();
-
     $this->get($path)->assertInertia(fn (Assert $page) => $page
         ->component($component)
         ->where('seo.robots', 'noindex,nofollow')
@@ -94,8 +90,6 @@ it('sets noindex metadata on auth pages', function (string $path, string $compon
 ]);
 
 it('sets noindex metadata on authenticated private pages', function (string $path, string $component): void {
-    $this->withoutVite();
-
     $user = User::factory()->create();
 
     $this->actingAs($user)->get($path)->assertInertia(fn (Assert $page) => $page
@@ -108,8 +102,6 @@ it('sets noindex metadata on authenticated private pages', function (string $pat
 ]);
 
 it('renders the maintenance page with noindex metadata', function (): void {
-    $this->withoutVite();
-
     $this->get('/maintenance')->assertInertia(fn (Assert $page) => $page
         ->component('Maintenance')
         ->where('seo.robots', 'noindex,nofollow')
@@ -117,8 +109,6 @@ it('renders the maintenance page with noindex metadata', function (): void {
 });
 
 it('renders mapped HTTP errors with noindex metadata', function (string $path, string $component, int $status): void {
-    $this->withoutVite();
-
     if ($status === 403) {
         $this->actingAs(User::factory()->create());
     }
