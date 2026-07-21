@@ -24,7 +24,7 @@ Use este checklist antes de colocar em produção um produto derivado deste star
 ## 4. Growth, metadata e GA4
 
 - [ ] Manter `GROWTH_ENABLED=false` até que finalidade, taxonomia, base legal, consentimento quando aplicável e retenção estejam aprovados.
-- [ ] Definir uma allowlist de chaves de metadata para os eventos e revisar a implementação antes de habilitar novos campos.
+- [ ] Adotar a [taxonomia mínima de eventos](ANALYTICS_EVENT_TAXONOMY.md), definir os valores enumerados do produto e revisar a allowlist positiva de metadata antes de habilitar novos campos.
 - [ ] Nunca incluir em metadata dados pessoais, credenciais, tokens, dados de autenticação, documentos, valores financeiros sensíveis, dados de saúde, identificadores governamentais ou conteúdo livre que possa conter essas informações.
 - [ ] Manter `GA_ENABLED=false` e `GA_MEASUREMENT_ID=` até que a mesma avaliação de finalidade, consentimento quando aplicável e configuração de produção esteja concluída.
 - [ ] Confirmar que Growth e GA4 permanecem opt-in: não habilitar nenhum dos dois por padrão nem como efeito colateral de outro recurso.
@@ -44,6 +44,6 @@ Use este checklist antes de colocar em produção um produto derivado deste star
 
 ## Referencias no starter
 
-- A configuração e os limites atuais de Growth estão em `docs/ARCHITECTURE.md` e `docs/MANUAL_TESTS.md`.
+- A configuração e os limites atuais de Growth estão em `docs/ARCHITECTURE.md`, `docs/ANALYTICS_EVENT_TAXONOMY.md` e `docs/MANUAL_TESTS.md`.
 - A decisão entre storage público e privado está em `docs/ARCHITECTURE.md` e `docs/DEPLOY.md`.
 - O checklist geral de início do produto está em `docs/ADOPTION_CHECKLIST.md`.
