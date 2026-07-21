@@ -106,3 +106,28 @@ it('sets noindex metadata on authenticated private pages', function (string $pat
     ['/dashboard', 'Dashboard'],
     ['/profile', 'Profile/Edit'],
 ]);
+
+it('renders the maintenance page with noindex metadata', function (): void {
+    $this->withoutVite();
+
+    $this->get('/maintenance')->assertInertia(fn (Assert $page) => $page
+        ->component('Maintenance')
+        ->where('seo.robots', 'noindex,nofollow')
+    );
+});
+
+it('renders mapped HTTP errors with noindex metadata', function (string $path, string $component, int $status): void {
+    $this->withoutVite();
+
+    if ($status === 403) {
+        $this->actingAs(User::factory()->create());
+    }
+
+    $this->get($path)->assertStatus($status)->assertInertia(fn (Assert $page) => $page
+        ->component($component)
+        ->where('seo.robots', 'noindex,nofollow')
+    );
+})->with([
+    ['/admin', 'Errors/Forbidden', 403],
+    ['/missing-page', 'Errors/NotFound', 404],
+]);

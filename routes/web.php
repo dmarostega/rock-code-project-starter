@@ -11,6 +11,7 @@ use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/maintenance', [PageController::class, 'maintenance'])->name('maintenance');
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 Route::post('/growth/events', [GrowthEventController::class, 'store'])->middleware('throttle:120,1')->name('growth.events.store');
