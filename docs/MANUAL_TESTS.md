@@ -83,7 +83,14 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 9. Confirme que `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD`, `APP_SEO_ROBOTS`, `APP_SEO_SITEMAP_PATHS` e `APP_SEO_ROBOTS_DISALLOW` foram revisados no `.env` do produto.
 10. Para produtos públicos, confirme que `APP_SEO_DEFAULT_IMAGE` aponta para uma imagem social pública, absoluta e acessível sem login.
 
-## 5.1 Configurações gerais do aplicativo
+## 5.1 Páginas de erro e manutenção
+
+1. Acesse uma URL inexistente e confirme a página 404 com retorno HTTP 404.
+2. Com um usuário sem permissão de admin, acesse `/admin` e confirme a página 403 com retorno HTTP 403.
+3. Acesse `/maintenance` e confirme a página de manutenção, sem configurar o modo de manutenção da aplicação.
+4. Inspecione as páginas 403, 404 e manutenção e confirme `<meta name="robots" content="noindex,nofollow">`.
+
+## 5.2 Configurações gerais do aplicativo
 
 1. Confirme que `APP_PUBLIC_NAME` aparece na navegação pública e autenticada.
 2. Confirme que `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL` foram revisados para o produto derivado e contêm apenas dados públicos.

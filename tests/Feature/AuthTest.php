@@ -83,8 +83,6 @@ it('allows configured administrators to access the admin dashboard', function ()
 
     $user = User::factory()->create(['email' => 'admin@example.com']);
 
-    $this->withoutVite();
-
     $this->actingAs($user)->get('/admin')->assertOk();
 });
 

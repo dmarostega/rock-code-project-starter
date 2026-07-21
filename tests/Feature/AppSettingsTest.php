@@ -3,8 +3,6 @@
 use Inertia\Testing\AssertableInertia as Assert;
 
 it('shares public app settings with inertia pages', function (): void {
-    $this->withoutVite();
-
     config([
         'app_settings.public_name' => 'Produto Publico',
         'app_settings.contact' => [

@@ -8,8 +8,6 @@ it('blocks guests from profile routes', function (): void {
 });
 
 it('shows the profile page to authenticated users', function (): void {
-    $this->withoutVite();
-
     $user = User::factory()->create([
         'name' => 'Cliente Perfil',
         'email' => 'perfil@example.com',
