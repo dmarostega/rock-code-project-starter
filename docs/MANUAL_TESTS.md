@@ -116,6 +116,12 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 2. Execute `npm run quality`.
 3. Corrija falhas antes de promover a base para v0.1 ou derivar um produto.
 
+## 7.1 Componentes UI mínimos
+
+1. Acesse `/login` e confirme que card, campo de e-mail e botão mantêm contraste e foco visível nos temas claro e escuro.
+2. Envie o formulário com um e-mail inválido e confirme que o feedback do campo é exibido e associado ao input.
+3. Em uma tela de desenvolvimento, valide `BaseAlert` nas quatro variantes, `EmptyState` com e sem ação e `LoadingState` com leitor de tela ou inspeção do atributo `role="status"`.
+
 ## 8. Registro final
 
 1. Registre ambiente, data, branch, commit e comandos executados.
