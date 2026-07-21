@@ -17,7 +17,7 @@ Este padrão segue a mesma separação adotada como referência em `dmarostega/c
 
 ### Growth
 
-`CaptureGrowthAttribution` guarda UTMs na sessão e `GrowthTracker` persiste eventos first-party. IP nunca é persistido em claro. A [taxonomia mínima de eventos](ANALYTICS_EVENT_TAXONOMY.md) define os eventos, metadata, campos proibidos, retenção e a separação entre analytics, logs e auditoria. Growth permanece desligado por padrão e só pode ser habilitado depois da aprovação e da implementação da allowlist positiva no produto derivado.
+`CaptureGrowthAttribution` guarda UTMs na sessão e `GrowthTracker` persiste eventos first-party. IP nunca é persistido em claro. A [taxonomia mínima de eventos](ANALYTICS_EVENT_TAXONOMY.md) define os eventos, metadata, campos proibidos, retenção e a separação entre analytics, logs e auditoria. Growth permanece desligado por padrão e só pode ser habilitado depois da aprovação e da revisão da allowlist positiva no produto derivado.
 
 ### Media
 

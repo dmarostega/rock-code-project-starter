@@ -53,10 +53,10 @@ conteúdo livre e campos não listados são recusados. O limite total permanece 
 - `feature_id`: identificador técnico e estável da funcionalidade, como
   `media_upload`.
 
-A configuração atual bloqueia chaves perigosas e tipos aninhados. Ao habilitar
-Growth em um produto derivado, implemente e teste também esta allowlist positiva
-no `StoreGrowthEventRequest` ou na regra de validação equivalente; uma blocklist
-isolada não torna uma nova chave permitida.
+A configuração atual aplica esta allowlist positiva por evento e bloqueia chaves
+perigosas e tipos aninhados. Ao adicionar um evento ou campo em um produto
+derivado, atualize a configuração, documente a decisão e cubra a alteração com
+testes; uma blocklist isolada não torna uma nova chave permitida.
 
 ## Dados proibidos
 
@@ -106,7 +106,7 @@ avaliação de necessidade e atualização da documentação de privacidade.
 1. Documente o evento, a finalidade, os valores enumerados e o responsável.
 2. Confirme base legal e consentimento quando aplicável com o responsável de
    privacidade/jurídico.
-3. Implemente e teste a allowlist positiva, incluindo a rejeição de campos
+3. Revise e teste a allowlist positiva, incluindo a rejeição de campos
    desconhecidos.
 4. Configure a retenção aprovada, valide o scheduler e registre a revisão.
 5. Só então habilite `GROWTH_ENABLED=true`; GA4 continua uma decisão separada
