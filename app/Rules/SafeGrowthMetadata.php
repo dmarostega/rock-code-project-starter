@@ -8,9 +8,7 @@ use Illuminate\Support\Str;
 
 class SafeGrowthMetadata implements ValidationRule
 {
-    public function __construct(private readonly ?string $eventName = null)
-    {
-    }
+    public function __construct(private readonly ?string $eventName = null) {}
 
     /** @param array<string, mixed> $value */
     public function validate(string $attribute, mixed $value, Closure $fail): void
