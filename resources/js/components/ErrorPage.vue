@@ -7,9 +7,14 @@ defineProps<{
   description: string;
   action?: {
     label: string;
-    href: string;
+    href?: string;
+    reload?: boolean;
   };
 }>();
+
+const reloadPage = (): void => {
+  window.location.reload();
+};
 </script>
 
 <template>
@@ -24,7 +29,16 @@ defineProps<{
       <p class="mx-auto mt-5 max-w-xl text-lg text-slate-600 dark:text-slate-300">
         {{ description }}
       </p>
+      <button
+        v-if="action?.reload"
+        type="button"
+        class="mt-8 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
+        @click="reloadPage"
+      >
+        {{ action.label }}
+      </button>
       <Link
+        v-else
         :href="action?.href ?? '/'"
         class="mt-8 inline-block rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
       >

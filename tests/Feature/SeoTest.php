@@ -2,7 +2,10 @@
 
 use App\Models\User;
 use App\Support\Seo\SeoData;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Http\Request;
 use Inertia\Testing\AssertableInertia as Assert;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 it('renders the home page and sitemap', function (): void {
     $this->get('/')->assertOk();
@@ -120,4 +123,20 @@ it('renders mapped HTTP errors with noindex metadata', function (string $path, s
 })->with([
     ['/admin', 'Errors/Forbidden', 403],
     ['/missing-page', 'Errors/NotFound', 404],
+]);
+
+it('renders 419 and 500 errors with noindex metadata', function (Throwable $exception, string $component, int $status): void {
+    $request = Request::create('/error', 'GET', [], [], [], [
+        'HTTP_X_INERTIA' => 'true',
+    ]);
+
+    $response = app(ExceptionHandler::class)->render($request, $exception);
+    $payload = json_decode($response->getContent(), true, flags: JSON_THROW_ON_ERROR);
+
+    expect($response->getStatusCode())->toBe($status)
+        ->and($payload['component'])->toBe($component)
+        ->and($payload['props']['seo']['robots'])->toBe('noindex,nofollow');
+})->with([
+    [new HttpException(419), 'Errors/PageExpired', 419],
+    [new RuntimeException('Test server error'), 'Errors/ServerError', 500],
 ]);

@@ -14,7 +14,7 @@ defineProps<{ seo: SeoData }>();
       code="419"
       title="Página expirada"
       description="Sua sessão expirou. Atualize a página e tente novamente."
-      :action="{ label: 'Atualizar página', href: '' }"
+      :action="{ label: 'Atualizar página', reload: true }"
     />
   </PublicLayout>
 </template>
