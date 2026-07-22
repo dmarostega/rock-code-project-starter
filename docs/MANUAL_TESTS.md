@@ -1,5 +1,10 @@
 # Roteiro manual da v0.1
 
+## Flags de recurso
+
+1. Defina `APP_FLAG_MEDIA_UPLOADS=false`, limpe o cache de configuracao e confirme que `POST /media` retorna 404 mesmo para um usuario autenticado.
+2. Reative a flag e confirme que o upload volta a funcionar.
+
 > Quando o produto implementar arquivos privados, execute também o roteiro de [download protegido](PRIVATE_FILE_DOWNLOAD_PATTERN.md). O módulo atual permanece configurado apenas para mídia pública.
 
 Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes de adotar o repositório em um novo produto.

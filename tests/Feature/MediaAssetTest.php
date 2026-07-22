@@ -167,6 +167,21 @@ it('blocks guests from uploading media', function (): void {
     expect(MediaAsset::query()->count())->toBe(0);
 });
 
+it('blocks media uploads server-side when the feature is disabled', function (): void {
+    Storage::fake('public');
+    config([
+        'app_settings.flags.media_uploads' => false,
+        'media.disk' => 'public',
+    ]);
+
+    $this->actingAs(User::factory()->create())->postJson('/media', [
+        'file' => UploadedFile::fake()->create('briefing.pdf', 100, 'application/pdf'),
+    ])->assertNotFound();
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
+});
+
 it('prevents another user from deleting an asset', function (): void {
     $owner = User::factory()->create();
     $asset = MediaAsset::create(['user_id' => $owner->id, 'disk' => 'public', 'path' => 'media/test.pdf', 'original_name' => 'test.pdf', 'mime_type' => 'application/pdf', 'size' => 10, 'kind' => 'document']);
