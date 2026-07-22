@@ -17,14 +17,12 @@ class AuditLog extends Model
         'action',
         'target_type',
         'target_id',
-        'metadata',
         'created_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'metadata' => 'array',
             'created_at' => 'datetime',
         ];
     }

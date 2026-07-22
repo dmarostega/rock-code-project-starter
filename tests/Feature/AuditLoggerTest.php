@@ -3,6 +3,7 @@
 use App\Models\AuditLog;
 use App\Models\User;
 use App\Services\AuditLogger;
+use Illuminate\Support\Facades\Schema;
 
 it('records an allowed audit action with technical identifiers only', function (): void {
     $actor = User::factory()->create();
@@ -15,16 +16,11 @@ it('records an allowed audit action with technical identifiers only', function (
     expect($auditLog->actor_id)->toBe($actor->id)
         ->and($auditLog->action)->toBe('user.role.changed')
         ->and($auditLog->target_type)->toBe(User::class)
-        ->and($auditLog->target_id)->toBe($target->id)
-        ->and($auditLog->metadata)->toBe([]);
+        ->and($auditLog->target_id)->toBe($target->id);
 });
 
-it('refuses audit metadata to prevent sensitive data collection', function (): void {
-    expect(fn () => app(AuditLogger::class)->record('admin.accessed', metadata: [
-        'token' => 'secret-token',
-    ]))->toThrow(InvalidArgumentException::class);
-
-    expect(AuditLog::query()->count())->toBe(0);
+it('does not create a metadata column that could store sensitive data', function (): void {
+    expect(Schema::hasColumn('audit_logs', 'metadata'))->toBeFalse();
 });
 
 it('refuses actions outside the approved audit scope', function (): void {
