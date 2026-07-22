@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\MediaProcessingException;
 use App\Http\Requests\StoreMediaRequest;
 use App\Http\Resources\MediaAssetResource;
 use App\Models\MediaAsset;
@@ -14,13 +13,7 @@ class MediaAssetController extends Controller
 {
     public function store(StoreMediaRequest $request, MediaService $media): JsonResponse
     {
-        try {
-            $asset = $media->store($request->file('file'), $request->user(), $request->string('alt_text')->toString() ?: null);
-        } catch (MediaProcessingException) {
-            return response()->json([
-                'message' => 'Não foi possível processar a imagem enviada.',
-            ], 422);
-        }
+        $asset = $media->store($request->file('file'), $request->user(), $request->string('alt_text')->toString() ?: null);
 
         return response()->json(['data' => new MediaAssetResource($asset)], 201);
     }

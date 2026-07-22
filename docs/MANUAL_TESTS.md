@@ -74,6 +74,8 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 11. Inicie o ambiente com `composer dev`; ele configura o servidor PHP para upload de imagem de ate 10 MB. Confirme que a URL devolvida para a midia comeca com `/storage/` e abre no mesmo host e porta do dashboard. No Windows, use `dev:logs` somente se o ambiente tiver a extensao `pcntl`; o Pail foi separado do comando principal por essa dependencia.
 
+12. Com um driver de imagem indisponivel, envie uma imagem valida e confirme que o arquivo original e armazenado, sem conversao ou redimensionamento.
+
 ## 5. SEO
 
 1. Abra a home e inspecione o HTML renderizado.

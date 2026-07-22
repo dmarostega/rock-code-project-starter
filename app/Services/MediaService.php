@@ -2,15 +2,14 @@
 
 namespace App\Services;
 
-use App\Exceptions\MediaProcessingException;
 use App\Models\MediaAsset;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Exceptions\RuntimeException as ImageRuntimeException;
 use Intervention\Image\ImageManager;
 use RuntimeException;
+use Throwable;
 
 class MediaService
 {
@@ -26,8 +25,8 @@ class MediaService
                     ->read($file)
                     ->scaleDown(width: (int) config('media.image.max_width'));
                 $contents = $image->toWebp(quality: (int) config('media.image.quality'));
-            } catch (ImageRuntimeException $exception) {
-                throw new MediaProcessingException('Unable to process the uploaded image.', previous: $exception);
+            } catch (Throwable) {
+                return $this->storeOriginalImage($file, $user, $directory, $disk, $altText);
             }
 
             $path = $directory.'/'.Str::ulid().'.webp';
@@ -72,5 +71,35 @@ class MediaService
     {
         Storage::disk($asset->disk)->delete($asset->path);
         $asset->delete();
+    }
+
+    private function storeOriginalImage(
+        UploadedFile $file,
+        User $user,
+        string $directory,
+        string $disk,
+        ?string $altText,
+    ): MediaAsset {
+        $extension = $file->extension() ?: 'image';
+        $path = $file->storeAs($directory, Str::ulid().'.'.$extension, $disk);
+
+        if (! $path) {
+            throw new RuntimeException('Unable to store the image.');
+        }
+
+        $dimensions = @getimagesize($file->getRealPath());
+
+        return MediaAsset::create([
+            'user_id' => $user->id,
+            'disk' => $disk,
+            'path' => $path,
+            'original_name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getMimeType(),
+            'size' => $file->getSize(),
+            'kind' => 'image',
+            'width' => $dimensions[0] ?? null,
+            'height' => $dimensions[1] ?? null,
+            'alt_text' => $altText,
+        ]);
     }
 }
