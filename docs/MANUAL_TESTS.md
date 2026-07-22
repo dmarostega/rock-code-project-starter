@@ -41,7 +41,13 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 3. Confirme que a tela usa o layout administrativo e possui o link de retorno ao dashboard.
 4. Remova o e-mail de `ADMIN_EMAILS` e confirme que o acesso volta a ser bloqueado.
 
-## 2.3 Tema claro/escuro
+## 2.3 Auditoria mínima
+
+1. Com `ADMIN_EMAILS` configurado, acesse `/admin` com uma conta autorizada.
+2. Consulte `audit_logs` e confirme um registro `admin.accessed` com o `actor_id` técnico da conta.
+3. Confirme que o registro não contém nome, e-mail, senha, token ou outro conteúdo da requisição.
+
+## 2.4 Tema claro/escuro
 
 1. Limpe `localStorage.rock-code-theme` e carregue a home com o sistema em tema claro; confirme que o layout inicia claro.
 2. Repita sem preferência salva com o sistema em tema escuro; confirme que a classe `dark` aparece no elemento `html`.

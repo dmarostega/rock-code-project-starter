@@ -84,6 +84,11 @@ it('allows configured administrators to access the admin dashboard', function ()
     $user = User::factory()->create(['email' => 'admin@example.com']);
 
     $this->actingAs($user)->get('/admin')->assertOk();
+
+    $this->assertDatabaseHas('audit_logs', [
+        'actor_id' => $user->id,
+        'action' => 'admin.accessed',
+    ]);
 });
 
 it('blocks guests from media routes', function (): void {
