@@ -5,6 +5,21 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
+it('renders the password reset request page', function (): void {
+    $this->get('/forgot-password')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('auth/ForgotPassword'));
+});
+
+it('renders the password reset page with token and email', function (): void {
+    $this->get('/reset-password/token-de-teste?email=cliente%40example.com')
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->component('auth/ResetPassword')
+            ->where('token', 'token-de-teste')
+            ->where('email', 'cliente@example.com'));
+});
+
 it('sends a password reset link notification', function (): void {
     Notification::fake();
     $user = User::factory()->create(['email' => 'cliente@example.com']);

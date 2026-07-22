@@ -31,6 +31,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
+                'status' => fn () => $request->session()->get('status'),
             ],
             'seo' => fn () => SeoData::defaults()->toArray(),
         ];

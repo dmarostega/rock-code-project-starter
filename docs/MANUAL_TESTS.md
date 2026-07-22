@@ -65,8 +65,8 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 ## 3. Reset de senha
 
 1. Confirme que `MAIL_MAILER=log` está configurado no ambiente local.
-2. Acesse `/forgot-password` e solicite reset para o e-mail cadastrado.
-3. Abra `storage/logs/laravel.log` e localize o link de reset gerado.
+2. Acesse `/login`, clique em `Esqueci minha senha` e confirme a abertura de `/forgot-password`.
+3. Solicite reset para o e-mail cadastrado e confirme a mensagem de retorno, sem expor se o e-mail existe.
 4. Acesse o link, defina uma nova senha e confirme o redirecionamento esperado.
 5. Saia da conta e entre novamente usando a nova senha.
 6. Confirme que a senha antiga não autentica mais.

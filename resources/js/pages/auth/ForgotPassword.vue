@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import BaseAlert from '@/components/ui/BaseAlert.vue';
 import SeoHead from '@/components/SeoHead.vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import type { SeoData } from '@/types';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 defineProps<{ seo: SeoData }>();
 const form = useForm({ email: '' });
+const page = usePage<{ flash: { status?: string } }>();
 </script>
 
 <template>
@@ -16,6 +18,9 @@ const form = useForm({ email: '' });
       @submit.prevent="form.post('/forgot-password')"
     >
       <h1 class="text-2xl font-bold">Recuperar senha</h1>
+      <BaseAlert v-if="page.props.flash.status" variant="success">
+        {{ page.props.flash.status }}
+      </BaseAlert>
       <p class="text-sm text-slate-600 dark:text-slate-300">
         Enviaremos um link de redefinição para seu e-mail.
       </p>
