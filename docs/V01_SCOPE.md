@@ -34,6 +34,10 @@ Ela foi aprovada com ressalvas para acelerar novos produtos, padronizar escolhas
 - Operacao completa de producao, monitoramento, backup automatizado e incident response.
 - Componentes premium especificos de um produto ou vertical de negocio.
 
+Quando um produto derivado precisar desses recursos, use o
+[blueprint de planos e feature access](PLANS_FEATURE_ACCESS_BLUEPRINT.md) como
+referência de desenho server-side. O documento não adiciona billing ao starter.
+
 ## Checklist minimo antes de usar
 
 Antes de adotar a v0.1 em um produto, execute o checklist de adocao em `docs/ADOPTION_CHECKLIST.md` e o roteiro manual em `docs/MANUAL_TESTS.md`.
