@@ -120,9 +120,10 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 1. Antes de adicionar billing, defina no produto derivado uma matriz plano × feature × limite, incluindo os estados `free`, `trial` e `premium` que forem aplicáveis.
 2. Confirme que cada rota, action, job e endpoint premium consulta uma decisão server-side; ocultar a ação no frontend não é suficiente.
-3. Teste uma conta ou organização sem entitlement e confirme o bloqueio esperado; teste um entitlement ativo, um trial expirado e um grant manual revogado.
+3. Teste uma conta ou organização sem entitlement e confirme o bloqueio esperado; teste um entitlement ativo, um trial expirado e um grant manual revogado. Confirme também que não é possível consultar, conceder ou consumir recursos de outro usuário ou organização por identificador direto.
 4. Para um recurso limitado, execute requisições concorrentes e confirme que o limite não é ultrapassado nem consumido duas vezes por retry.
-5. Se houver gateway, confirme que um webhook idempotente atualiza entitlements após validação e não concede acesso diretamente sem a decisão central.
+5. Se houver gateway, envie um webhook com assinatura ausente, inválida ou timestamp fora da tolerância e confirme que ele é rejeitado antes de idempotência, reconciliação ou alteração de entitlement. Confirme que o segredo permanece apenas no servidor e possui processo de rotação.
+6. Com um evento autenticado, confirme que o webhook idempotente atualiza entitlements somente uma vez e não concede acesso diretamente sem a decisão central.
 
 ## 6. Growth e GA4
 

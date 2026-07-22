@@ -38,6 +38,11 @@ nesta ordem:
 4. limite de uso do recurso;
 5. regra padrão de negação.
 
+Ator, recurso, entitlement, grant e contador devem pertencer ao mesmo escopo de
+usuário ou organização. Valide esse vínculo no servidor antes de consultar ou
+alterar o estado para impedir acesso direto a objetos (IDOR), concessões cruzadas
+e consumo de cota entre tenants.
+
 Use Policies, middleware, Form Requests ou Services conforme o ponto de entrada,
 mas mantenha uma única fonte de verdade para a regra. `APP_FLAG_*` continua útil
 para habilitar ou desligar módulos por ambiente; não deve ser usado como
@@ -89,8 +94,14 @@ O produto pode separar as seguintes responsabilidades em tabelas ou provedores:
 - adaptador de billing que sincroniza eventos externos com entitlements.
 
 O adaptador de billing não deve conceder acesso diretamente a partir de um
-webhook sem validação, idempotência e reconciliação. Ele atualiza o entitlement;
-o serviço central de access controla a autorização.
+webhook. Antes de qualquer alteração de estado, valide a assinatura criptográfica
+do gateway sobre o payload bruto, rejeite assinatura ausente ou inválida e aplique
+a proteção contra replay oferecida pelo provedor, como timestamp e tolerância de
+tempo. Mantenha o segredo somente no servidor e planeje sua rotação.
+
+Somente após autenticar o evento, execute idempotência e reconciliação. O
+adaptador então atualiza o entitlement; o serviço central de access controla a
+autorização.
 
 ## Quando implementar
 
