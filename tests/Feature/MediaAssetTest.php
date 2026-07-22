@@ -41,6 +41,47 @@ it('stores an allowed document for an authenticated user', function (): void {
     ]);
 });
 
+it('processes an uploaded image with the configured Intervention driver', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->post('/media', [
+        'file' => UploadedFile::fake()->image('banner.png', 3200, 1600),
+        'alt_text' => 'Banner de teste',
+    ])->assertCreated();
+
+    $asset = MediaAsset::query()->sole();
+
+    expect($asset)
+        ->kind->toBe('image')
+        ->mime_type->toBe('image/webp')
+        ->width->toBe(2400)
+        ->height->toBe(1200)
+        ->alt_text->toBe('Banner de teste')
+        ->and($asset->path)->toEndWith('.webp')
+        ->and($response->json('data.mime_type'))->toBe('image/webp');
+
+    Storage::disk('public')->assertExists($asset->path);
+});
+
+it('returns a controlled error when the image driver is unavailable', function (): void {
+    Storage::fake('public');
+    config([
+        'media.disk' => 'public',
+        'media.image.driver' => stdClass::class,
+    ]);
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->image('banner.png'),
+    ])->assertUnprocessable()->assertJson([
+        'message' => 'Não foi possível processar a imagem enviada.',
+    ]);
+
+    expect(MediaAsset::query()->count())->toBe(0);
+});
+
 it('blocks uploads with a disallowed mime type', function (): void {
     Storage::fake('public');
     config(['media.disk' => 'public']);
