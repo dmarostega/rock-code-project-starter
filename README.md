@@ -54,4 +54,5 @@ composer ci:check
 - Leia `docs/ADOPTION_CHECKLIST.md` antes de iniciar um produto e remova tudo que o novo produto nao precisar.
 - Use `docs/DEPLOY.md` como roteiro minimo para deploy manual em VPS, CloudPanel ou ambiente equivalente.
 - Use `APP_FLAG_*` somente para recursos opcionais. As flags ficam em `config/app_settings.php`; aplique `feature:nome_da_flag` na rota protegida para que o servidor responda 404 quando o recurso estiver desligado. A flag `media_uploads` e o exemplo de referencia.
+- Quando o produto precisar de planos, trial, limites ou liberações comerciais, siga o [blueprint de planos e feature access](docs/PLANS_FEATURE_ACCESS_BLUEPRINT.md). Ele orienta autorização server-side sem adicionar billing ao core.
 - Use `docs/OPERATIONS.md` para a rotina mínima de logs, health check, filas, scheduler, backup, rollback e validação pós-deploy.

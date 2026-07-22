@@ -10,6 +10,7 @@
 - [ ] Revisar `APP_SEO_DEFAULT_TITLE`, `APP_SEO_TITLE_SUFFIX`, `APP_SEO_DEFAULT_DESCRIPTION`, `APP_SEO_DEFAULT_IMAGE`, `APP_SEO_TWITTER_CARD`, `APP_SEO_ROBOTS`, `APP_SEO_SITEMAP_PATHS` e `APP_SEO_ROBOTS_DISALLOW`; produtos públicos devem definir `APP_SEO_DEFAULT_IMAGE`.
 - [ ] Revisar flags simples `APP_FLAG_PUBLIC_REGISTRATION`, `APP_FLAG_MEDIA_UPLOADS` e `GROWTH_ENABLED`; elas são fundação de config, não substituem Policies, middleware ou regras de negócio.
 - [ ] Alterar descrição, URLs e identidade visual.
+- [ ] Se o produto tiver planos, trial, limites ou grants manuais, preencher a matriz plano × feature × limite e seguir `docs/PLANS_FEATURE_ACCESS_BLUEPRINT.md`. A autorização deve ser server-side; `APP_FLAG_*` não substitui entitlements por usuário ou organização.
 - [ ] Escolher MySQL/PostgreSQL/SQLite e configurar `.env`.
 - [ ] Remover módulos opcionais que o produto não utilizará.
 - [ ] Definir domínio, casos de uso, Policies e eventos principais.
