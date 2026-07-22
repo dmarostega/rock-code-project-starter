@@ -72,6 +72,8 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 
 10. Confirme que `MEDIA_IMAGE_DRIVER` aponta para um driver suportado, como `Intervention\Image\Drivers\Gd\Driver`; se o driver estiver indisponivel, o upload de imagem deve retornar uma mensagem controlada.
 
+11. Inicie o ambiente com `composer dev`; ele configura o servidor PHP para upload de imagem de ate 10 MB. Confirme que a URL devolvida para a midia comeca com `/storage/` e abre no mesmo host e porta do dashboard.
+
 ## 5. SEO
 
 1. Abra a home e inspecione o HTML renderizado.

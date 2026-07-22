@@ -38,6 +38,7 @@ it('stores an allowed document for an authenticated user', function (): void {
         'height' => null,
         'alt_text' => 'Briefing comercial',
         'display_name' => 'Briefing comercial',
+        'url' => '/storage/'.$asset->path,
     ]);
 });
 
