@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CaptureGrowthAttribution;
+use App\Http\Middleware\EnsureFeatureIsEnabled;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Support\Seo\SeoData;
 use Illuminate\Auth\AuthenticationException;
@@ -21,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+            'feature' => EnsureFeatureIsEnabled::class,
+        ]);
+
         $middleware->web(append: [
             CaptureGrowthAttribution::class,
             HandleInertiaRequests::class,

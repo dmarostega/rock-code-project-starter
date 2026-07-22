@@ -1,5 +1,9 @@
 # Checklist para iniciar um projeto
 
+## Flags de recurso
+
+- [ ] Para cada rota opcional, aplicar o middleware `feature:nome_da_flag`; a flag deve impedir o acesso no servidor, nao apenas ocultar a interface. `media_uploads` e o exemplo-base e retorna 404 quando desligada.
+
 - [ ] Ler `docs/V01_SCOPE.md` e confirmar que o produto aceita a v0.1 como base experimental para MVP, sem assumir billing, planos, admin real, exportações ou operação madura no core.
 - [ ] Alterar `APP_NAME` e `APP_PUBLIC_NAME`; use `APP_NAME` para identificação interna Laravel e `APP_PUBLIC_NAME` para nome visível do produto.
 - [ ] Configurar contato principal público em `APP_CONTACT_NAME`, `APP_CONTACT_EMAIL`, `APP_CONTACT_PHONE` e `APP_CONTACT_URL`; não use esse grupo para dados internos, pessoais ou operacionais sensíveis.
