@@ -7,12 +7,14 @@ withDefaults(
     type?: string;
     required?: boolean;
     autocomplete?: string;
+    maxlength?: number;
   }>(),
   {
     error: '',
     type: 'text',
     required: false,
     autocomplete: undefined,
+    maxlength: undefined,
   },
 );
 
@@ -28,6 +30,7 @@ const model = defineModel<string>({ required: true });
       :type="type"
       :required="required"
       :autocomplete="autocomplete"
+      :maxlength="maxlength"
       :aria-invalid="Boolean(error)"
       :aria-describedby="error ? `${id}-error` : undefined"
       class="w-full rounded-lg border bg-white px-3 py-2 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-slate-950 dark:text-slate-100"
