@@ -1,5 +1,7 @@
 # Arquitetura
 
+> Para produtos com arquivos restritos, consulte o [padrão de download protegido](PRIVATE_FILE_DOWNLOAD_PATTERN.md) antes de habilitar upload em disco privado.
+
 ## Princípios
 
 - O starter fornece infraestrutura, não regras de um produto específico.
