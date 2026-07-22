@@ -1,5 +1,7 @@
 # Roteiro manual da v0.1
 
+> Quando o produto implementar arquivos privados, execute também o roteiro de [download protegido](PRIVATE_FILE_DOWNLOAD_PATTERN.md). O módulo atual permanece configurado apenas para mídia pública.
+
 Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes de adotar o repositório em um novo produto.
 
 ## 1. Setup limpo
