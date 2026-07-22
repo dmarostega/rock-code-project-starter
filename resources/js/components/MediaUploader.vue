@@ -3,6 +3,13 @@ import type { MediaAsset } from '@/types';
 import axios from 'axios';
 import { ref } from 'vue';
 
+type UploadErrorResponse = {
+  message?: string;
+  errors?: {
+    file?: string[];
+  };
+};
+
 const emit = defineEmits<{ uploaded: [asset: MediaAsset] }>();
 const file = ref<File | null>(null);
 const altText = ref('');
@@ -11,6 +18,16 @@ const loading = ref(false);
 
 const selectFile = (event: Event): void => {
   file.value = (event.target as HTMLInputElement).files?.[0] ?? null;
+};
+
+const uploadErrorMessage = (exception: unknown): string => {
+  const fallback = 'N\u00e3o foi poss\u00edvel enviar o arquivo.';
+
+  if (!axios.isAxiosError<UploadErrorResponse>(exception)) {
+    return fallback;
+  }
+
+  return exception.response?.data.errors?.file?.[0] ?? exception.response?.data.message ?? fallback;
 };
 
 const upload = async (): Promise<void> => {
@@ -27,8 +44,8 @@ const upload = async (): Promise<void> => {
     emit('uploaded', response.data.data);
     file.value = null;
     altText.value = '';
-  } catch {
-    error.value = 'Não foi possível enviar o arquivo.';
+  } catch (exception) {
+    error.value = uploadErrorMessage(exception);
   } finally {
     loading.value = false;
   }
