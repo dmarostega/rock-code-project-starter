@@ -100,14 +100,18 @@ class MediaService
         string $disk,
         ?string $altText,
     ): MediaAsset {
+        $dimensions = @getimagesize($file->getRealPath());
+
+        if ($dimensions === false) {
+            throw new MediaProcessingException('Unable to validate the uploaded image.');
+        }
+
         $extension = $file->extension() ?: 'image';
         $path = $file->storeAs($directory, Str::ulid().'.'.$extension, $disk);
 
         if (! $path) {
             throw new RuntimeException('Unable to store the image.');
         }
-
-        $dimensions = @getimagesize($file->getRealPath());
 
         return MediaAsset::create([
             'user_id' => $user->id,

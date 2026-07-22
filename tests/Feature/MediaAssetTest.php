@@ -110,6 +110,28 @@ it('rejects a corrupted image without creating media or storing a file', functio
     Storage::disk('public')->assertDirectoryEmpty('media');
 });
 
+it('rejects a corrupted image when processing is unavailable', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    app()->instance(MediaService::class, new class extends MediaService
+    {
+        protected function canProcessImage(UploadedFile $file): bool
+        {
+            return false;
+        }
+    });
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->create('corrupted.jpg', 10, 'image/jpeg'),
+    ])->assertUnprocessable()->assertJson([
+        'message' => 'Nao foi possivel processar a imagem enviada.',
+    ]);
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
+});
+
 it('blocks uploads with a disallowed mime type', function (): void {
     Storage::fake('public');
     config(['media.disk' => 'public']);
