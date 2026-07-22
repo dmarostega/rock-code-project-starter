@@ -5,6 +5,8 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
+const PASSWORD_RESET_STATUS = 'Se houver uma conta associada a este e-mail, você receberá instruções para redefinir sua senha.';
+
 it('renders the password reset request page', function (): void {
     $this->get('/forgot-password')
         ->assertOk()
@@ -26,9 +28,19 @@ it('sends a password reset link notification', function (): void {
 
     $this->post('/forgot-password', [
         'email' => 'cliente@example.com',
-    ])->assertSessionHas('status');
+    ])->assertSessionHas('status', PASSWORD_RESET_STATUS);
 
     Notification::assertSentTo($user, ResetPassword::class);
+});
+
+it('does not reveal whether a password reset email is registered', function (): void {
+    Notification::fake();
+
+    $this->post('/forgot-password', [
+        'email' => 'nao-cadastrado@example.com',
+    ])->assertSessionHas('status', PASSWORD_RESET_STATUS);
+
+    Notification::assertNothingSent();
 });
 
 it('resets the password with a valid token', function (): void {
@@ -40,7 +52,7 @@ it('resets the password with a valid token', function (): void {
 
     $this->post('/forgot-password', [
         'email' => 'cliente@example.com',
-    ])->assertSessionHas('status');
+    ])->assertSessionHas('status', PASSWORD_RESET_STATUS);
 
     $token = null;
     Notification::assertSentTo(
