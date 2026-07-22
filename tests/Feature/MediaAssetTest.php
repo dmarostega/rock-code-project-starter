@@ -2,6 +2,7 @@
 
 use App\Models\MediaAsset;
 use App\Models\User;
+use App\Services\MediaService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,12 +67,16 @@ it('processes an uploaded image with the configured Intervention driver', functi
     Storage::disk('public')->assertExists($asset->path);
 });
 
-it('stores the original image when the configured driver is unavailable', function (): void {
+it('stores the original image only when image processing is unavailable', function (): void {
     Storage::fake('public');
-    config([
-        'media.disk' => 'public',
-        'media.image.driver' => stdClass::class,
-    ]);
+    config(['media.disk' => 'public']);
+    app()->instance(MediaService::class, new class extends MediaService
+    {
+        protected function canProcessImage(UploadedFile $file): bool
+        {
+            return false;
+        }
+    });
     $user = User::factory()->create();
 
     $this->actingAs($user)->postJson('/media', [
@@ -88,6 +93,21 @@ it('stores the original image when the configured driver is unavailable', functi
         ->and($asset->path)->toEndWith('.png');
 
     Storage::disk('public')->assertExists($asset->path);
+});
+
+it('rejects a corrupted image without creating media or storing a file', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->create('corrupted.jpg', 10, 'image/jpeg'),
+    ])->assertUnprocessable()->assertJson([
+        'message' => 'Nao foi possivel processar a imagem enviada.',
+    ]);
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
 });
 
 it('blocks uploads with a disallowed mime type', function (): void {

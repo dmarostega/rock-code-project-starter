@@ -70,11 +70,11 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 8. Revise se o produto derivado realmente pode usar storage público. Para arquivos sensíveis, troque para disco privado e implemente entrega autorizada ou URL temporária antes da adoção.
 9. Com dois usuários diferentes, confirme que um usuário não consegue excluir mídia pertencente ao outro.
 
-10. Confirme que `MEDIA_IMAGE_DRIVER` aponta para um driver suportado, como `Intervention\Image\Drivers\Gd\Driver`; se o driver estiver indisponivel, o upload de imagem deve retornar uma mensagem controlada.
+10. Confirme que `MEDIA_IMAGE_DRIVER` aponta para um driver suportado, como `Intervention\Image\Drivers\Gd\Driver`; se o ambiente nao tiver capacidade para processar a imagem, o upload deve preservar o arquivo original validado.
 
 11. Inicie o ambiente com `composer dev`; ele configura o servidor PHP para upload de imagem de ate 10 MB. Confirme que a URL devolvida para a midia comeca com `/storage/` e abre no mesmo host e porta do dashboard. No Windows, use `dev:logs` somente se o ambiente tiver a extensao `pcntl`; o Pail foi separado do comando principal por essa dependencia.
 
-12. Com um driver de imagem indisponivel, envie uma imagem valida e confirme que o arquivo original e armazenado, sem conversao ou redimensionamento.
+12. Envie uma imagem corrompida com MIME ou extensao permitidos e confirme resposta controlada, sem criar midia ou armazenar arquivo.
 
 ## 5. SEO
 

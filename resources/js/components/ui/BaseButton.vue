@@ -6,11 +6,13 @@ withDefaults(
     type?: 'button' | 'submit' | 'reset';
     variant?: ButtonVariant;
     loading?: boolean;
+    disabled?: boolean;
   }>(),
   {
     type: 'button',
     variant: 'primary',
     loading: false,
+    disabled: false,
   },
 );
 </script>
@@ -18,7 +20,7 @@ withDefaults(
 <template>
   <button
     :type="type"
-    :disabled="loading"
+    :disabled="loading || disabled"
     :aria-busy="loading"
     class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
     :class="{
