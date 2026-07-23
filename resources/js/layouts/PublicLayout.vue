@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import ThemeToggle from '@/components/ThemeToggle.vue';
+import type { PageProps } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
+
+const page = usePage<PageProps>();
+</script>
+
+<template>
+  <div class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <header
+      class="border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
+    >
+      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
+        <Link href="/" class="truncate font-semibold text-slate-950 dark:text-white">
+          {{ page.props.appName }}
+        </Link>
+        <div class="flex shrink-0 items-center gap-2 text-sm sm:gap-4">
+          <ThemeToggle />
+          <Link
+            v-if="page.props.auth.user"
+            href="/dashboard"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+          >
+            Dashboard
+          </Link>
+          <Link
+            v-if="page.props.auth.user"
+            href="/logout"
+            method="post"
+            as="button"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+          >
+            Sair
+          </Link>
+          <Link
+            v-if="!page.props.auth.user"
+            href="/login"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+          >
+            Entrar
+          </Link>
+          <Link
+            v-if="!page.props.auth.user && page.props.appSettings.flags.public_registration"
+            href="/register"
+            class="rounded-lg bg-blue-600 px-3 py-2 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
+          >
+            Criar conta
+          </Link>
+        </div>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-6xl px-6 py-10"><slot /></main>
+  </div>
+</template>

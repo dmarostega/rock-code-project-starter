@@ -10,7 +10,7 @@ Antes de usar em um produto, leia `docs/V01_SCOPE.md` e execute `docs/ADOPTION_C
 
 ## Stack
 
-- PHP 8.3 e Laravel 13
+- PHP 8.4 e Laravel 13
 - Vue 3 exclusivamente com TypeScript
 - Inertia 2 e Tailwind CSS 4
 - Fortify para autenticacao e Sanctum para API
@@ -19,10 +19,11 @@ Antes de usar em um produto, leia `docs/V01_SCOPE.md` e execute `docs/ADOPTION_C
 ## Recursos incluidos
 
 - Autenticacao minima com login, cadastro e recuperacao via Fortify.
-- SEO por pagina, canonical, Open Graph, Twitter Card, sitemap e robots.
+- SEO por página, canonical, Open Graph, Twitter Card, sitemap e robots.
 - Tracking first-party de eventos e atribuicao UTM, desligado por padrao ate o produto definir finalidade, taxonomia e consentimento.
 - GA4/GTag opcional via `GA_ENABLED=false` e `GA_MEASUREMENT_ID=`, com guards de producao, debug e host local.
 - Upload de imagens/PDF, WebP, limite de dimensao, Storage e Policy.
+- Feature flags simples por ambiente, aplicadas no servidor para rotas opcionais.
 - SQLite local por padrao, filas e cache em banco, endpoint `/up` e CI.
 - Documentacao de arquitetura, adocao e testes manuais.
 
@@ -52,3 +53,6 @@ composer ci:check
 - Leia `docs/V01_SCOPE.md` para entender o escopo oficial, as limitacoes e o que fica fora do core da v0.1 experimental.
 - Leia `docs/ADOPTION_CHECKLIST.md` antes de iniciar um produto e remova tudo que o novo produto nao precisar.
 - Use `docs/DEPLOY.md` como roteiro minimo para deploy manual em VPS, CloudPanel ou ambiente equivalente.
+- Use `APP_FLAG_*` somente para recursos opcionais. As flags ficam em `config/app_settings.php`; aplique `feature:nome_da_flag` na rota protegida para que o servidor responda 404 quando o recurso estiver desligado. A flag `media_uploads` e o exemplo de referencia.
+- Quando o produto precisar de planos, trial, limites ou liberações comerciais, siga o [blueprint de planos e feature access](docs/PLANS_FEATURE_ACCESS_BLUEPRINT.md). Ele orienta autorização server-side sem adicionar billing ao core.
+- Use `docs/OPERATIONS.md` para a rotina mínima de logs, health check, filas, scheduler, backup, rollback e validação pós-deploy.

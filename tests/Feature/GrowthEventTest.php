@@ -3,8 +3,6 @@
 use App\Models\GrowthEvent;
 
 it('captures campaign attribution without storing a raw ip', function (): void {
-    $this->withoutVite();
-
     config([
         'growth.enabled' => true,
         'app.key' => 'base64:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=',
@@ -28,6 +26,7 @@ it('rejects invalid event names', function (): void {
     config(['growth.enabled' => true]);
 
     $this->postJson('/growth/events', ['name' => 'Invalid Event'])->assertUnprocessable();
+    $this->postJson('/growth/events', ['name' => 'unknown.event'])->assertUnprocessable();
 });
 
 it('keeps growth disabled until a product explicitly enables it', function (): void {
@@ -47,5 +46,10 @@ it('rejects unsafe growth metadata', function (): void {
     $this->postJson('/growth/events', [
         'name' => 'cta.clicked',
         'metadata' => ['placement' => ['nested' => true]],
+    ])->assertUnprocessable();
+
+    $this->postJson('/growth/events', [
+        'name' => 'cta.clicked',
+        'metadata' => ['page_type' => 'home'],
     ])->assertUnprocessable();
 });

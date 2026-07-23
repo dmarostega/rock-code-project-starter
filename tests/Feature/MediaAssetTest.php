@@ -2,6 +2,7 @@
 
 use App\Models\MediaAsset;
 use App\Models\User;
+use App\Services\MediaService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,89 @@ it('stores an allowed document for an authenticated user', function (): void {
         'height' => null,
         'alt_text' => 'Briefing comercial',
         'display_name' => 'Briefing comercial',
+        'url' => '/storage/'.$asset->path,
     ]);
+});
+
+it('processes an uploaded image with the configured Intervention driver', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->post('/media', [
+        'file' => UploadedFile::fake()->image('banner.png', 3200, 1600),
+        'alt_text' => 'Test banner',
+    ])->assertCreated();
+
+    $asset = MediaAsset::query()->sole();
+
+    expect($asset)
+        ->kind->toBe('image')
+        ->mime_type->toBe('image/webp')
+        ->width->toBe(2400)
+        ->height->toBe(1200)
+        ->alt_text->toBe('Test banner')
+        ->and($asset->path)->toEndWith('.webp')
+        ->and($response->json('data.mime_type'))->toBe('image/webp');
+
+    Storage::disk('public')->assertExists($asset->path);
+});
+
+it('rejects images when image processing is unavailable', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    app()->instance(MediaService::class, new class extends MediaService
+    {
+        protected function canProcessImage(UploadedFile $file): bool
+        {
+            return false;
+        }
+    });
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->image('banner.png'),
+    ])->assertUnprocessable();
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
+});
+
+it('rejects a corrupted image without creating media or storing a file', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->create('corrupted.jpg', 10, 'image/jpeg'),
+    ])->assertUnprocessable()->assertJson([
+        'message' => 'Nao foi possivel processar a imagem enviada.',
+    ]);
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
+});
+
+it('rejects a corrupted image when processing is unavailable', function (): void {
+    Storage::fake('public');
+    config(['media.disk' => 'public']);
+    app()->instance(MediaService::class, new class extends MediaService
+    {
+        protected function canProcessImage(UploadedFile $file): bool
+        {
+            return false;
+        }
+    });
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->postJson('/media', [
+        'file' => UploadedFile::fake()->create('corrupted.jpg', 10, 'image/jpeg'),
+    ])->assertUnprocessable()->assertJson([
+        'message' => 'Nao foi possivel processar a imagem enviada.',
+    ]);
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
 });
 
 it('blocks uploads with a disallowed mime type', function (): void {
@@ -74,6 +157,21 @@ it('blocks guests from uploading media', function (): void {
     ])->assertRedirect('/login');
 
     expect(MediaAsset::query()->count())->toBe(0);
+});
+
+it('blocks media uploads server-side when the feature is disabled', function (): void {
+    Storage::fake('public');
+    config([
+        'app_settings.flags.media_uploads' => false,
+        'media.disk' => 'public',
+    ]);
+
+    $this->actingAs(User::factory()->create())->postJson('/media', [
+        'file' => UploadedFile::fake()->create('briefing.pdf', 100, 'application/pdf'),
+    ])->assertNotFound();
+
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
 });
 
 it('prevents another user from deleting an asset', function (): void {

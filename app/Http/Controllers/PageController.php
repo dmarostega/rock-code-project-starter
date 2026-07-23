@@ -15,6 +15,11 @@ class PageController extends Controller
 
     public function dashboard(): Response
     {
-        return Inertia::render('Dashboard', ['seo' => SeoData::page('Dashboard')->toArray()]);
+        return Inertia::render('Dashboard', ['seo' => SeoData::privatePage('Dashboard')->toArray()]);
+    }
+
+    public function maintenance(): Response
+    {
+        return Inertia::render('Maintenance', ['seo' => SeoData::privatePage('Manutenção')->toArray()]);
     }
 }

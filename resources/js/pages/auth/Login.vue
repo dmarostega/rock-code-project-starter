@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseCard from '@/components/ui/BaseCard.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
 import SeoHead from '@/components/SeoHead.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 import type { SeoData } from '@/types';
 import { useForm } from '@inertiajs/vue3';
 
@@ -10,44 +13,41 @@ const form = useForm({ email: '', password: '', remember: false });
 
 <template>
   <SeoHead :seo="seo" />
-  <AppLayout>
-    <form
-      class="mx-auto max-w-md space-y-4 rounded-xl border bg-white p-6"
-      @submit.prevent="form.post('/login')"
-    >
-      <h1 class="text-2xl font-bold">Entrar</h1>
-      <div>
-        <label class="mb-1 block text-sm" for="email">E-mail</label
-        ><input
+  <PublicLayout>
+    <BaseCard class="mx-auto max-w-md">
+      <form class="space-y-4" @submit.prevent="form.post('/login')">
+        <h1 class="text-2xl font-bold">Entrar</h1>
+        <BaseInput
           id="email"
           v-model="form.email"
           type="email"
+          label="E-mail"
           required
           autocomplete="email"
-          class="w-full rounded-lg border px-3 py-2"
+          :error="form.errors.email"
         />
-        <p v-if="form.errors.email" class="text-sm text-red-700">{{ form.errors.email }}</p>
-      </div>
-      <div>
-        <label class="mb-1 block text-sm" for="password">Senha</label
-        ><input
-          id="password"
-          v-model="form.password"
-          type="password"
-          required
-          autocomplete="current-password"
-          class="w-full rounded-lg border px-3 py-2"
-        />
-      </div>
-      <label class="flex gap-2 text-sm"
-        ><input v-model="form.remember" type="checkbox" /> Lembrar de mim</label
-      >
-      <button
-        class="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white"
-        :disabled="form.processing"
-      >
-        Entrar
-      </button>
-    </form>
-  </AppLayout>
+        <div>
+          <label class="mb-1 block text-sm" for="password">Senha</label
+          ><input
+            id="password"
+            v-model="form.password"
+            type="password"
+            required
+            autocomplete="current-password"
+            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+          />
+        </div>
+        <label class="flex gap-2 text-sm"
+          ><input v-model="form.remember" type="checkbox" /> Lembrar de mim</label
+        >
+        <BaseButton type="submit" class="w-full" :loading="form.processing"> Entrar </BaseButton>
+        <a
+          class="block text-center text-sm font-medium text-blue-700 hover:underline dark:text-blue-300"
+          href="/forgot-password"
+        >
+          Esqueci minha senha
+        </a>
+      </form>
+    </BaseCard>
+  </PublicLayout>
 </template>

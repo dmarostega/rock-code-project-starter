@@ -1,5 +1,7 @@
 # Arquitetura
 
+> Para produtos com arquivos restritos, consulte o [padrão de download protegido](PRIVATE_FILE_DOWNLOAD_PATTERN.md) antes de habilitar upload em disco privado.
+
 ## Princípios
 
 - O starter fornece infraestrutura, não regras de um produto específico.
@@ -11,11 +13,13 @@
 
 ### SEO
 
-`App\Support\Seo\SeoData` normaliza title, description, canonical, Open Graph e Twitter Card. Cada página entrega a prop `seo` e `SeoHead.vue` publica as tags. O sitemap inicial é intencionalmente simples e deve passar a usar URLs reais do produto.
+`config/app_settings.php` concentra a fundação reaproveitável de configurações públicas: nome visível, contato principal, SEO default revisável e flags simples. `App\Support\Seo\SeoData` usa essa fundação para normalizar title, description, canonical, Open Graph e Twitter Card. Cada página entrega a prop `seo` e `SeoHead.vue` publica as tags. Use `SeoData::page()` somente em páginas públicas indexáveis. Use `SeoData::privatePage()` em auth, dashboard, profile, settings, admin e qualquer tela restrita ou operacional para publicar `noindex,nofollow`. O sitemap usa somente os caminhos públicos explícitos de `APP_SEO_SITEMAP_PATHS`; auth, dashboard, admin, profile, settings e reset password ficam fora por padrão. O `/robots.txt` é mínimo por padrão e só deve usar `APP_SEO_ROBOTS_DISALLOW` quando a intenção for impedir crawling, sabendo que isso não substitui `noindex` nem autenticação.
+
+Este padrão segue a mesma separação adotada como referência em `dmarostega/classificados#21`: o sitemap é dinâmico, mas nasce de uma allowlist explícita de URLs públicas indexáveis. Ao derivar um produto, não adicione endpoints autenticados, operacionais, de recuperação de senha ou administrativos em `APP_SEO_SITEMAP_PATHS`; para cada uma dessas telas, envie `SeoData::privatePage()` ao frontend.
 
 ### Growth
 
-`CaptureGrowthAttribution` guarda UTMs na sessão e `GrowthTracker` persiste eventos first-party. IP nunca é persistido em claro. Antes da produção, documente consentimento, revise retenção e defina a taxonomia dos eventos.
+`CaptureGrowthAttribution` guarda UTMs na sessão e `GrowthTracker` persiste eventos first-party. IP nunca é persistido em claro. A [taxonomia mínima de eventos](ANALYTICS_EVENT_TAXONOMY.md) define os eventos, metadata, campos proibidos, retenção e a separação entre analytics, logs e auditoria. Growth permanece desligado por padrão e só pode ser habilitado depois da aprovação e da revisão da allowlist positiva no produto derivado.
 
 ### Media
 

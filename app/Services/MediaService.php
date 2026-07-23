@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Exceptions\MediaProcessingException;
 use App\Models\MediaAsset;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Exceptions\RuntimeException as ImageRuntimeException;
+use Intervention\Image\ImageManager;
 use RuntimeException;
 
 class MediaService
@@ -19,8 +22,19 @@ class MediaService
         $isImage = Str::startsWith((string) $file->getMimeType(), 'image/');
 
         if ($isImage) {
-            $image = Image::read($file)->scaleDown(width: (int) config('media.image.max_width'));
-            $contents = $image->toWebp(quality: (int) config('media.image.quality'));
+            if (! $this->canProcessImage($file)) {
+                throw new MediaProcessingException('Image processing is unavailable in this environment.');
+            }
+
+            try {
+                $image = ImageManager::withDriver((string) config('media.image.driver'))
+                    ->read($file)
+                    ->scaleDown(width: (int) config('media.image.max_width'));
+                $contents = $image->toWebp(quality: (int) config('media.image.quality'));
+            } catch (ImageRuntimeException $exception) {
+                throw new MediaProcessingException('Unable to process the uploaded image.', previous: $exception);
+            }
+
             $path = $directory.'/'.Str::ulid().'.webp';
 
             if (! Storage::disk($disk)->put($path, (string) $contents)) {
@@ -63,5 +77,19 @@ class MediaService
     {
         Storage::disk($asset->disk)->delete($asset->path);
         $asset->delete();
+    }
+
+    protected function canProcessImage(UploadedFile $file): bool
+    {
+        if (config('media.image.driver') !== GdDriver::class) {
+            return true;
+        }
+
+        return match ($file->getMimeType()) {
+            'image/jpeg' => function_exists('imagecreatefromjpeg') && function_exists('imagewebp'),
+            'image/png' => function_exists('imagecreatefrompng') && function_exists('imagewebp'),
+            'image/webp' => function_exists('imagecreatefromwebp') && function_exists('imagewebp'),
+            default => false,
+        };
     }
 }

@@ -11,17 +11,17 @@ class AuthPageController extends Controller
 {
     public function login(): Response
     {
-        return Inertia::render('auth/Login', ['seo' => SeoData::page('Entrar')->toArray()]);
+        return Inertia::render('auth/Login', ['seo' => SeoData::privatePage('Entrar')->toArray()]);
     }
 
     public function register(): Response
     {
-        return Inertia::render('auth/Register', ['seo' => SeoData::page('Criar conta')->toArray()]);
+        return Inertia::render('auth/Register', ['seo' => SeoData::privatePage('Criar conta')->toArray()]);
     }
 
     public function forgotPassword(): Response
     {
-        return Inertia::render('auth/ForgotPassword', ['seo' => SeoData::page('Recuperar senha')->toArray()]);
+        return Inertia::render('auth/ForgotPassword', ['seo' => SeoData::privatePage('Recuperar senha')->toArray()]);
     }
 
     public function resetPassword(Request $request, string $token): Response
@@ -29,7 +29,7 @@ class AuthPageController extends Controller
         return Inertia::render('auth/ResetPassword', [
             'token' => $token,
             'email' => $request->string('email')->toString(),
-            'seo' => SeoData::page('Redefinir senha')->toArray(),
+            'seo' => SeoData::privatePage('Redefinir senha')->toArray(),
         ]);
     }
 }

@@ -10,7 +10,7 @@ Ela foi aprovada com ressalvas para acelerar novos produtos, padronizar escolhas
 
 - Estrutura Laravel + Inertia + Vue 3 com TypeScript.
 - Autenticacao minima com Fortify.
-- Paginas iniciais publicas, login, cadastro, reset de senha e dashboard simples.
+- Páginas iniciais públicas, login, cadastro, reset de senha e dashboard simples.
 - SEO basico, sitemap e robots.
 - Tracking first-party opcional e GA4 opcional com guards para ambiente local/debug.
 - Upload basico de imagens e PDF com Policy, validacao e Storage.
@@ -33,6 +33,10 @@ Ela foi aprovada com ressalvas para acelerar novos produtos, padronizar escolhas
 - Multi-tenant, RBAC avancado, auditoria completa ou workflows maduros.
 - Operacao completa de producao, monitoramento, backup automatizado e incident response.
 - Componentes premium especificos de um produto ou vertical de negocio.
+
+Quando um produto derivado precisar desses recursos, use o
+[blueprint de planos e feature access](PLANS_FEATURE_ACCESS_BLUEPRINT.md) como
+referência de desenho server-side. O documento não adiciona billing ao starter.
 
 ## Checklist minimo antes de usar
 

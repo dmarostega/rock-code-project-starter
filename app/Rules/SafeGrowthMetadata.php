@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class SafeGrowthMetadata implements ValidationRule
 {
+    public function __construct(private readonly ?string $eventName = null) {}
+
     /** @param array<string, mixed> $value */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -18,10 +20,17 @@ class SafeGrowthMetadata implements ValidationRule
         $blockedKeys = collect(config('growth.blocked_metadata_keys', []))
             ->map(fn (string $key): string => Str::lower($key))
             ->all();
+        $allowedKeys = config('growth.events', [])[$this->eventName] ?? [];
 
         foreach ($value as $key => $metadataValue) {
             if (! is_string($key) || in_array(Str::lower($key), $blockedKeys, true)) {
                 $fail('The :attribute field contains a blocked key.');
+
+                return;
+            }
+
+            if (! in_array($key, $allowedKeys, true)) {
+                $fail('The :attribute field contains a key that is not allowed for this event.');
 
                 return;
             }

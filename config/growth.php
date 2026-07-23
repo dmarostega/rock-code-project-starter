@@ -6,6 +6,15 @@ return [
     'attribution_keys' => ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'],
     'metadata_limit' => 20,
     'metadata_string_limit' => 255,
+    'events' => [
+        'page.viewed' => ['page_type', 'surface', 'locale'],
+        'cta.clicked' => ['cta_id', 'placement', 'surface', 'variant'],
+        'form.started' => ['form_id', 'surface'],
+        'form.submitted' => ['form_id', 'surface'],
+        'sign_up.completed' => ['method', 'surface'],
+        'sign_in.completed' => ['method', 'surface'],
+        'feature.used' => ['feature_id', 'surface', 'variant'],
+    ],
     'blocked_metadata_keys' => [
         'content',
         'cpf',

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\SafeGrowthMetadata;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreGrowthEventRequest extends FormRequest
 {
@@ -16,11 +17,11 @@ class StoreGrowthEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'regex:/^[a-z0-9._-]+$/', 'max:100'],
+            'name' => ['required', 'string', Rule::in(array_keys(config('growth.events', [])))],
             'anonymous_id' => ['nullable', 'uuid'],
             'path' => ['nullable', 'string', 'max:2048'],
             'referrer' => ['nullable', 'url', 'max:2048'],
-            'metadata' => ['nullable', 'array', 'max:'.config('growth.metadata_limit'), new SafeGrowthMetadata],
+            'metadata' => ['nullable', 'array', 'max:'.config('growth.metadata_limit'), new SafeGrowthMetadata($this->input('name'))],
         ];
     }
 }

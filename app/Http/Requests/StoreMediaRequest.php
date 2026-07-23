@@ -20,4 +20,12 @@ class StoreMediaRequest extends FormRequest
             'alt_text' => ['nullable', 'string', 'max:255'],
         ];
     }
+
+    /** @return array<string, string> */
+    public function messages(): array
+    {
+        return [
+            'file.uploaded' => 'O arquivo excede o limite permitido pelo servidor.',
+        ];
+    }
 }

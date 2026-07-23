@@ -21,11 +21,17 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'appName' => config('app.name'),
+            'appName' => config('app_settings.public_name'),
+            'appSettings' => fn () => [
+                'publicName' => config('app_settings.public_name'),
+                'contact' => config('app_settings.contact'),
+                'flags' => config('app_settings.flags'),
+            ],
             'auth' => ['user' => $this->sharedUser($request->user())],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
+                'status' => fn () => $request->session()->get('status'),
             ],
             'seo' => fn () => SeoData::defaults()->toArray(),
         ];

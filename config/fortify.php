@@ -13,5 +13,8 @@ return [
     'middleware' => ['web'],
     'views' => false,
     'limiters' => ['login' => 'login', 'two-factor' => 'two-factor'],
-    'features' => [Features::registration(), Features::resetPasswords()],
+    'features' => array_filter([
+        config('app_settings.flags.public_registration') ? Features::registration() : null,
+        Features::resetPasswords(),
+    ]),
 ];
