@@ -20,6 +20,7 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 7. Execute `composer dev` e abra `http://localhost:8000` ou a URL exibida pelo servidor.
 8. Confirme que a home carrega sem erro no console do navegador.
 9. Acesse `/up` e confirme resposta HTTP 200.
+10. Abra a home e `/login` em uma aba anônima e confirme que a aba exibe o ícone de `public/favicon.svg`; limpe o cache se necessário.
 
 ## 2. Autenticação
 
