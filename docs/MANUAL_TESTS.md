@@ -32,7 +32,9 @@ Use este roteiro antes de marcar o starter como base experimental v0.1 ou antes 
 6. Acesse `/login` com a conta criada e confirme novo acesso ao dashboard.
 7. Tente acessar `/dashboard` sem sessão e confirme redirecionamento para `/login`.
 8. Tente enviar `POST /media` sem sessão e confirme redirecionamento ou resposta de não autorizado.
-9. Valide mensagens de erro para credenciais inválidas no login.
+9. Tente entrar com credenciais inválidas e confirme a mensagem amigável `As credenciais informadas não conferem.`, sem exibir `auth.failed`.
+10. Entre com credenciais válidas sem marcar `Lembrar de mim`; confirme que a sessão segue o comportamento normal.
+11. Saia, entre novamente marcando `Lembrar de mim` e confirme a presença do cookie persistente em uma nova sessão do navegador.
 
 ## 2.1 Perfil do usuário
 

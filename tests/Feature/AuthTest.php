@@ -28,9 +28,45 @@ it('rejects invalid login credentials', function (): void {
     $this->from('/login')->post('/login', [
         'email' => 'cliente@example.com',
         'password' => 'senha-incorreta',
-    ])->assertRedirect('/login')->assertSessionHasErrors('email');
+    ])->assertRedirect('/login')->assertSessionHasErrors([
+        'email' => 'As credenciais informadas não conferem.',
+    ]);
 
     $this->assertGuest();
+});
+
+it('creates a persistent cookie when remember me is selected', function (): void {
+    $user = User::factory()->create([
+        'email' => 'cliente@example.com',
+        'password' => Hash::make('password'),
+    ]);
+
+    $response = $this->post('/login', [
+        'email' => 'cliente@example.com',
+        'password' => 'password',
+        'remember' => true,
+    ]);
+
+    $response->assertRedirect('/dashboard')
+        ->assertCookie($this->app['auth']->guard()->getRecallerName());
+
+    $this->assertAuthenticatedAs($user);
+});
+
+it('does not create a persistent cookie when remember me is not selected', function (): void {
+    User::factory()->create([
+        'email' => 'cliente@example.com',
+        'password' => Hash::make('password'),
+    ]);
+
+    $response = $this->post('/login', [
+        'email' => 'cliente@example.com',
+        'password' => 'password',
+        'remember' => false,
+    ]);
+
+    $response->assertRedirect('/dashboard')
+        ->assertCookieMissing($this->app['auth']->guard()->getRecallerName());
 });
 
 it('logs out an authenticated user', function (): void {
