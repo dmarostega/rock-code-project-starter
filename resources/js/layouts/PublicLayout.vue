@@ -18,12 +18,30 @@ const page = usePage<PageProps>();
         <div class="flex shrink-0 items-center gap-2 text-sm sm:gap-4">
           <ThemeToggle />
           <Link
+            v-if="page.props.auth.user"
+            href="/dashboard"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+          >
+            Dashboard
+          </Link>
+          <Link
+            v-if="page.props.auth.user"
+            href="/logout"
+            method="post"
+            as="button"
+            class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
+          >
+            Sair
+          </Link>
+          <Link
+            v-if="!page.props.auth.user"
             href="/login"
             class="font-medium text-slate-700 hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-300"
           >
             Entrar
           </Link>
           <Link
+            v-if="!page.props.auth.user && page.props.appSettings.flags.public_registration"
             href="/register"
             class="rounded-lg bg-blue-600 px-3 py-2 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
           >

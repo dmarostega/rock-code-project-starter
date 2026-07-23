@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
 it('shares public app settings with inertia pages', function (): void {
@@ -18,7 +19,8 @@ it('shares public app settings with inertia pages', function (): void {
         ],
     ]);
 
-    $this->get('/')->assertInertia(fn (Assert $page) => $page
+    $this->actingAs(User::factory()->create())->get('/dashboard')->assertInertia(fn (Assert $page) => $page
+        ->component('Dashboard')
         ->where('appName', 'Produto Publico')
         ->where('appSettings.publicName', 'Produto Publico')
         ->where('appSettings.contact.email', 'contato@example.com')

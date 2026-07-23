@@ -98,6 +98,21 @@ it('registers a new user', function (): void {
         ->and(Hash::check('password', $user->password))->toBeTrue();
 });
 
+it('blocks registration when public registration is disabled', function (): void {
+    config()->set('app_settings.flags.public_registration', false);
+
+    $this->get('/register')->assertNotFound();
+
+    $this->post('/register', [
+        'name' => 'Cliente Bloqueado',
+        'email' => 'bloqueado@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ])->assertNotFound();
+
+    $this->assertDatabaseMissing('users', ['email' => 'bloqueado@example.com']);
+});
+
 it('blocks guests from the dashboard', function (): void {
     $this->get('/dashboard')->assertRedirect('/login');
 });
