@@ -41,6 +41,12 @@ const form = useForm({ email: '', password: '', remember: false });
           ><input v-model="form.remember" type="checkbox" /> Lembrar de mim</label
         >
         <BaseButton type="submit" class="w-full" :loading="form.processing"> Entrar </BaseButton>
+        <a
+          class="block text-center text-sm font-medium text-blue-700 hover:underline dark:text-blue-300"
+          href="/forgot-password"
+        >
+          Esqueci minha senha
+        </a>
       </form>
     </BaseCard>
   </PublicLayout>
