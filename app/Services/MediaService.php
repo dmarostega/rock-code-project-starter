@@ -23,7 +23,7 @@ class MediaService
 
         if ($isImage) {
             if (! $this->canProcessImage($file)) {
-                return $this->storeOriginalImage($file, $user, $directory, $disk, $altText);
+                throw new MediaProcessingException('Image processing is unavailable in this environment.');
             }
 
             try {
@@ -93,37 +93,4 @@ class MediaService
         };
     }
 
-    private function storeOriginalImage(
-        UploadedFile $file,
-        User $user,
-        string $directory,
-        string $disk,
-        ?string $altText,
-    ): MediaAsset {
-        $dimensions = @getimagesize($file->getRealPath());
-
-        if ($dimensions === false) {
-            throw new MediaProcessingException('Unable to validate the uploaded image.');
-        }
-
-        $extension = $file->extension() ?: 'image';
-        $path = $file->storeAs($directory, Str::ulid().'.'.$extension, $disk);
-
-        if (! $path) {
-            throw new RuntimeException('Unable to store the image.');
-        }
-
-        return MediaAsset::create([
-            'user_id' => $user->id,
-            'disk' => $disk,
-            'path' => $path,
-            'original_name' => $file->getClientOriginalName(),
-            'mime_type' => $file->getMimeType(),
-            'size' => $file->getSize(),
-            'kind' => 'image',
-            'width' => $dimensions[0] ?? null,
-            'height' => $dimensions[1] ?? null,
-            'alt_text' => $altText,
-        ]);
-    }
 }

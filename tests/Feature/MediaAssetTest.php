@@ -67,7 +67,7 @@ it('processes an uploaded image with the configured Intervention driver', functi
     Storage::disk('public')->assertExists($asset->path);
 });
 
-it('stores the original image only when image processing is unavailable', function (): void {
+it('rejects images when image processing is unavailable', function (): void {
     Storage::fake('public');
     config(['media.disk' => 'public']);
     app()->instance(MediaService::class, new class extends MediaService
@@ -81,18 +81,10 @@ it('stores the original image only when image processing is unavailable', functi
 
     $this->actingAs($user)->postJson('/media', [
         'file' => UploadedFile::fake()->image('banner.png'),
-    ])->assertCreated();
+    ])->assertUnprocessable();
 
-    $asset = MediaAsset::query()->sole();
-
-    expect($asset)
-        ->kind->toBe('image')
-        ->mime_type->toBe('image/png')
-        ->width->toBe(10)
-        ->height->toBe(10)
-        ->and($asset->path)->toEndWith('.png');
-
-    Storage::disk('public')->assertExists($asset->path);
+    expect(MediaAsset::query()->count())->toBe(0);
+    Storage::disk('public')->assertDirectoryEmpty('media');
 });
 
 it('rejects a corrupted image without creating media or storing a file', function (): void {

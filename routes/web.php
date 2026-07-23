@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeoController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/maintenance', [PageController::class, 'maintenance'])->name('maintenance');
@@ -18,7 +19,12 @@ Route::post('/growth/events', [GrowthEventController::class, 'store'])->middlewa
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthPageController::class, 'login'])->name('login');
-    Route::get('/register', [AuthPageController::class, 'register'])->name('register');
+    Route::get('/register', [AuthPageController::class, 'register'])
+        ->middleware('feature:public_registration')
+        ->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store'])
+        ->middleware('feature:public_registration')
+        ->name('register.store');
     Route::get('/forgot-password', [AuthPageController::class, 'forgotPassword'])->name('password.request');
     Route::get('/reset-password/{token}', [AuthPageController::class, 'resetPassword'])->name('password.reset');
 });
