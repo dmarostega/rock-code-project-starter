@@ -22,7 +22,10 @@ const reloadPage = (): void => {
     class="mx-auto flex min-h-[60vh] max-w-2xl items-center justify-center py-12 text-center"
   >
     <div>
-      <p class="text-sm font-semibold tracking-widest text-blue-700 uppercase dark:text-blue-300">
+      <p
+        v-if="code"
+        class="text-sm font-semibold tracking-widest text-blue-700 uppercase dark:text-blue-300"
+      >
         Erro {{ code }}
       </p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{{ title }}</h1>
